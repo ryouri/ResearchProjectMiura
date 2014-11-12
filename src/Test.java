@@ -6,9 +6,13 @@ public class Test extends PApplet {
 		background(0, 0, 0);
 		smooth();
 		strokeWeight(5);
+
+		System.out.println("Hello World");
 	}
 
 	public void draw() {
+
+
 		noStroke();
 		fill(0, 10);
 		rect(0, 0, width, height);
