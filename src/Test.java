@@ -2,10 +2,11 @@ import processing.core.PApplet;
 
 public class Test extends PApplet {
 	public void setup() {
-		size(400, 400);
+		size(800, 800);
 		background(0, 0, 0);
 		smooth();
-		strokeWeight(5);
+		strokeWeight(10);
+		
 	}
 
 	public void draw() {
