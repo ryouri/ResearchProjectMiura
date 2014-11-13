@@ -3,7 +3,7 @@ import processing.core.PApplet;
 public class Test extends PApplet {
 	public void setup() {
 		size(400, 400);
-		background(0, 0, 0);
+		background(255, 255, 0);
 		smooth();
 		strokeWeight(5);
 	}
