@@ -27,6 +27,10 @@ public class MassManager {
 		loadTruthTable(inputCSVPath);
 	}
 
+	/**
+	 * 真理値表ファイルを読み込むメソッド
+	 * @param filePath 真理値表ファイルのPath
+	 */
 	private void loadTruthTable(String filePath) {
 		try {
 			//ファイルを展開
@@ -39,6 +43,9 @@ public class MassManager {
 			
 			//massArrayを生成
 			generateMassArray(variableArray);
+			
+			//ここで，massArrayを生成してから，各Massの状態(Sum)を保存しているため
+			//少々複雑な処理になっている
 
 			str = br.readLine();
 			//2行目以降を読み込み，Massを構築していく
@@ -56,6 +63,60 @@ public class MassManager {
 		}
 	}
 
+	/**
+	 * Massの配列を生成するメソッド
+	 * @param variableArray : 変数名が格納された配列
+	 */
+	private void generateMassArray(String[] variableArray) {
+		variableNum = variableArray.length - 1;
+		
+		//TODO: とりあえずvariableNum = 4 の時のみ
+		if (variableNum == 4) {
+			massArray = new Mass[1][4][4];
+			Mass[][] oneTableMassArray = massArray[0];
+			
+			//マスを生成してmassArrayに格納する
+			for (int y = 0; y < oneTableMassArray.length; y++) {
+				for (int x = 0; x < oneTableMassArray[0].length; x++) {
+					generateMass(y, x, oneTableMassArray, variableArray);
+				}
+			}
+		} else {
+			System.exit(1);
+		}
+	}
+	
+	/**
+	 * 1つのMassを生成し，配列に格納するメソッド
+	 * @param y 格納先のy座標
+	 * @param x 格納先のx座標
+	 * @param addTableMassArray Massを保存する２次元配列
+	 * @param variableArray 変数名が格納された配列
+	 */
+	private void generateMass(int y, int x, Mass[][] addTableMassArray, String[] variableArray) {
+		//Massインスタンスを生成
+		Mass mass = new Mass();
+		
+		//変数の数を登録
+		mass.setVariableNum(variableNum);
+		
+		//変数名を登録
+		for (int i = 0; i < variableNum; i++) {
+			mass.getVariableArray().add(variableArray[i]);
+		}
+		
+		//変数の座標を登録
+		for (int i = 0; i < Mass.POS.length; i++) {
+			mass.getVariablePosMap().put(variableArray[i], Mass.POS[i][y][x]);
+		}
+		
+		addTableMassArray[y][x] = mass;
+	}
+
+	/**
+	 * @param variableArray 変数名が格納された配列
+	 * @param variablePosArray CSVファイルの1行の文字列が格納された配列 0,0,0,1,1 みたいな
+	 */
 	private void addVariablePosToMassArray(String[] variableArray, String[] variablePosArray) {
 		//String１行をint1行に変換
 		int[] intVariablePosArray = new int[variablePosArray.length];
@@ -82,47 +143,10 @@ public class MassManager {
 						continue;
 					}
 					
+					//状態（0, 1, DONTCARE）を設定
 					massArray[z][y][x].setState(intVariablePosArray[intVariablePosArray.length - 1]);
 				}
 			}
 		}
-	}
-
-	private void generateMassArray(String[] variableArray) {
-		variableNum = variableArray.length - 1;
-		
-		//TODO: とりあえずvariableNum = 4 の時のみ
-		if (variableNum == 4) {
-			massArray = new Mass[1][4][4];
-			Mass[][] oneTableMassArray = massArray[0];
-			
-			for (int y = 0; y < oneTableMassArray.length; y++) {
-				for (int x = 0; x < oneTableMassArray[0].length; x++) {
-					generateMass(y, x, oneTableMassArray, variableArray);
-				}
-			}
-		} else {
-			System.exit(1);
-		}
-	}
-	
-	private void generateMass(int y, int x, Mass[][] addTableMassArray, String[] variableArray) {
-		//Massインスタンスを生成
-		Mass mass = new Mass();
-		
-		//変数の数を登録
-		mass.setVariableNum(variableNum);
-		
-		//変数名を登録
-		for (int i = 0; i < variableNum; i++) {
-			mass.getVariableArray().add(variableArray[i]);
-		}
-		
-		//変数の座標を登録
-		for (int i = 0; i < Mass.POS.length; i++) {
-			mass.getVariablePosMap().put(variableArray[i], Mass.POS[i][y][x]);
-		}
-		
-		addTableMassArray[y][x] = mass;
 	}
 }
