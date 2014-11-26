@@ -17,28 +17,28 @@ public class Mass {
 	//以下の4つは4変数の際の，各変数の0, 1の場所を記録
 	public static final int[][][] POS = 
 		{
-			{
+			{//A
 				{0, 0, 0, 0},
 				{0, 0, 0, 0},
 				{1, 1, 1, 1},
 				{1, 1, 1, 1}
 			},
 
-			{
+			{//B
 				{0, 0, 0, 0},
 				{1, 1, 1, 1},
 				{1, 1, 1, 1},
 				{0, 0, 0, 0}
 			},
 
-			{
+			{//C
 				{0, 0, 1, 1},
 				{0, 0, 1, 1},
 				{0, 0, 1, 1},
 				{0, 0, 1, 1}
 			},
 
-			{
+			{//D
 				{0, 1, 1, 0},
 				{0, 1, 1, 0},
 				{0, 1, 1, 0},
@@ -67,7 +67,7 @@ public class Mass {
 	 */
 	private int variableNum;
 
-	//以下はこのMASSの各状態を表す定数
+	//以下はこのMASSの各状態(Sum)を表す定数
 	/**
 	 * 状態：０を表す定数
 	 */
@@ -82,7 +82,7 @@ public class Mass {
 	public static final int STATE_DONTCARE = 2;
 	
 	/**
-	 * このMassの状態を表す変数
+	 * このMassの状態(Sum)を保存する変数
 	 */
 	private int state;
 	
