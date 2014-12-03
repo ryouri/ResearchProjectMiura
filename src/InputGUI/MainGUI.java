@@ -125,6 +125,7 @@ public class MainGUI {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setBounds(30, 44, 228, 19);
 		textField.setColumns(10);
 		
