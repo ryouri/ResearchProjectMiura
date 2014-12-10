@@ -1,6 +1,7 @@
 package researchproject.drawmodule;
 
 import processing.core.PApplet;
+import researchproject.drawmodule.calc.CalcurateManager;
 import researchproject.drawmodule.mass.Mass;
 import researchproject.drawmodule.mass.MassManager;
 
@@ -9,13 +10,19 @@ import researchproject.drawmodule.mass.MassManager;
  * DrawManagerから実行してください
  */
 public class KarnaughMapDrawer extends PApplet {
-	MassManager massManager;
+	private MassManager massManager;
 
-	Mass[][][] massArray;
-	
+	private Mass[][][] massArray;
+
+	private CalcurateManager calcurateManager;
+
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
 		this.massArray = massManager.getMassArray();
+	}
+
+	public void setCalcurateManager(CalcurateManager calcurateManager) {
+		this.calcurateManager = calcurateManager;
 	}
 
 	public void setup() {
@@ -46,7 +53,7 @@ public class KarnaughMapDrawer extends PApplet {
 
 		//TODO: とりあえず4変数のため，以下の様な処理とする
 		Mass[][] oneTableMassArray = massArray[0];
-		
+
 		// 表を埋める
 		for (int k = 0; k < oneTableMassArray.length; k++) {
 			for (int l = 0; l < oneTableMassArray[k].length; l++) {

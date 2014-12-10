@@ -8,7 +8,7 @@ public class LoopUnit {
 		this.x = x;
 	}
 	/**
-	 *  massArray[z][y][x]
+	 * massArray[z][y][x]
 	 */
 	private int z;
 
@@ -38,6 +38,4 @@ public class LoopUnit {
 	public void setX(int x) {
 		this.x = x;
 	}
-
-
 }
