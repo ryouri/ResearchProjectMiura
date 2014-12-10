@@ -20,6 +20,7 @@ public class DrawManager {
 		MassManager massManager = new MassManager(this.filePath);
 
 		CalcurateManager calcurateManager = new CalcurateManager();
+		calcurateManager.setMassManager(massManager);
 		calcurateManager.start();
 
 		//カルノー図描画クラスを生成し，Mass管理クラスを渡す
