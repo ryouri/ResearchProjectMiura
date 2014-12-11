@@ -13,6 +13,7 @@ public class CalcurateManager extends Thread{
 	public void run() {
 		super.run();
 
+		//TODO: ループの生成プログラムを書く
 
 	}
 
