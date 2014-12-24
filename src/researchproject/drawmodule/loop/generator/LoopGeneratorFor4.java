@@ -124,8 +124,18 @@ public class LoopGeneratorFor4 extends LoopGenerator{
 		return loop;
 	}
 
+	/**
+	 * 成り立っているループが既にSuccessLoopArrayに格納済みのループに含まれているかチェックし，
+	 * 全ての既に格納済みのループに含まれていなければ格納する
+	 * @param targetLoop 成り立っているループ
+	 */
 	private void addSuccessLoop(Loop targetLoop) {
-		boolean successAddFlag = false;
+		//そもそも配列のサイズが0なら追加する
+		if (successLoopArray.size() == 0) {
+			successLoopArray.add(targetLoop);
+		}
+
+		//全ての既に格納されているループに含まれていなければ，追加する
 
 		//すでに格納されている成り立っているループごとに処理を行う
 		for (Loop successLoop : successLoopArray) {
@@ -136,17 +146,22 @@ public class LoopGeneratorFor4 extends LoopGenerator{
 				loopExistArray[0][loopUnit.getY()][loopUnit.getX()] = true;
 			}
 
+			boolean noAddFlag = true;
 			//追加したいループの座標を走査して，今まで格納されているループに含まれているかを判定する
 			for (LoopUnit loopUnit : targetLoop.getLoopUnitArray()) {
 				if (!loopExistArray[0][loopUnit.getY()][loopUnit.getX()]) {
 					//ループに含まれていなければ
-					successAddFlag = true;
+					noAddFlag = false;
 				}
+			}
+
+			//すでに格納されているループに含まれているため，ループを追加しない
+			if (noAddFlag) {
+				return;
 			}
 		}
 
-		if (successAddFlag || successLoopArray.size() == 0) {
-			successLoopArray.add(targetLoop);
-		}
+		//ここまでくれば，全ての既に格納されているループに含まれていないため，追加する
+		successLoopArray.add(targetLoop);
 	}
 }

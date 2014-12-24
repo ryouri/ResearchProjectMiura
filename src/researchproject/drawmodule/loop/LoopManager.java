@@ -90,4 +90,8 @@ public class LoopManager{
 
 		loopGenerator.generateLoop();
 	}
+
+	/**
+	 * 計算されたループから論理式を生成する
+	 */
 }
