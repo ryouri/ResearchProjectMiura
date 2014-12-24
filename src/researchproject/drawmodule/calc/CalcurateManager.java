@@ -1,9 +1,12 @@
 package researchproject.drawmodule.calc;
 
+import researchproject.drawmodule.loop.LoopManager;
 import researchproject.drawmodule.mass.MassManager;
 
 public class CalcurateManager extends Thread{
 	private MassManager massManager;
+
+	private LoopManager loopManager;
 
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
@@ -14,8 +17,7 @@ public class CalcurateManager extends Thread{
 		super.run();
 
 		//TODO: ループの生成プログラムを書く
-
+		loopManager = new LoopManager(massManager.getVariableNum(), massManager);
+		loopManager.generateLoop();
 	}
-
-
 }

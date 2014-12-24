@@ -8,9 +8,13 @@ import java.io.IOException;
 
 public class MassManager {
 	private String inputCSVPath;
-	
+
 	private int variableNum;
-	
+
+	public int getVariableNum() {
+		return variableNum;
+	}
+
 	private Mass[][][] massArray;
 
 	public Mass[][][] getMassArray() {
@@ -40,10 +44,10 @@ public class MassManager {
 			//1行目を読み込み，分割
 			String str = br.readLine();
 			String[] variableArray = str.split(",");
-			
+
 			//massArrayを生成
 			generateMassArray(variableArray);
-			
+
 			//ここで，massArrayを生成してから，各Massの状態(Sum)を保存しているため
 			//少々複雑な処理になっている
 
@@ -69,12 +73,12 @@ public class MassManager {
 	 */
 	private void generateMassArray(String[] variableArray) {
 		variableNum = variableArray.length - 1;
-		
+
 		//TODO: とりあえずvariableNum = 4 の時のみ
 		if (variableNum == 4) {
 			massArray = new Mass[1][4][4];
 			Mass[][] oneTableMassArray = massArray[0];
-			
+
 			//マスを生成してmassArrayに格納する
 			for (int y = 0; y < oneTableMassArray.length; y++) {
 				for (int x = 0; x < oneTableMassArray[0].length; x++) {
@@ -85,7 +89,7 @@ public class MassManager {
 			System.exit(1);
 		}
 	}
-	
+
 	/**
 	 * 1つのMassを生成し，配列に格納するメソッド
 	 * @param y 格納先のy座標
@@ -96,20 +100,20 @@ public class MassManager {
 	private void generateMass(int y, int x, Mass[][] addTableMassArray, String[] variableArray) {
 		//Massインスタンスを生成
 		Mass mass = new Mass();
-		
+
 		//変数の数を登録
 		mass.setVariableNum(variableNum);
-		
+
 		//変数名を登録
 		for (int i = 0; i < variableNum; i++) {
 			mass.getVariableArray().add(variableArray[i]);
 		}
-		
+
 		//変数の座標を登録
 		for (int i = 0; i < Mass.POS.length; i++) {
 			mass.getVariablePosMap().put(variableArray[i], Mass.POS[i][y][x]);
 		}
-		
+
 		addTableMassArray[y][x] = mass;
 	}
 
@@ -137,12 +141,12 @@ public class MassManager {
 							break;
 						}
 					}
-					
+
 					//おなし座標のマスじゃないのなら，次のマスへ
 					if (sameMassFlag == false) {
 						continue;
 					}
-					
+
 					//状態（0, 1, DONTCARE）を設定
 					massArray[z][y][x].setState(intVariablePosArray[intVariablePosArray.length - 1]);
 				}
