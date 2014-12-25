@@ -15,8 +15,20 @@ public class Variable5_01 extends PApplet{
 	final int massW = 30;
 	final int massH = 25;
 
-	int[][] shinri = {{0,0,0,0,0},{1,1,0,0,0},{1,0,1,0,0},{0,0,1,1,0},//表(上)
-					  {1,1,1,1,1},{1,1,1,1,1},{1,0,0,0,1},{0,0,1,1,1}};//表(下)
+	int[][] shinri = {
+				{0,0,0,0,0},
+				{1,1,0,0,0},
+				{1,0,1,0,0},
+				{0,0,1,1,0}
+			,//表(上)
+
+
+				{1,1,1,1,1},
+				{1,1,1,1,1},
+				{1,0,0,0,1},
+				{0,0,1,1,1}
+
+		};//表(下)
 
 	public void draw(){
 		//座標軸の中心を移動
@@ -119,7 +131,7 @@ public class Variable5_01 extends PApplet{
 	//1を書く(表０(上))
 	public void drawText0(int i,int j,int x,int y,int z){
 		fill(0,0,0);
-		textSize(12);
+		textSize(11);
 		text("1",+massW/3+massW*j-x,15+massH*i-y,-z);
 	}
 
