@@ -19,5 +19,6 @@ public class CalcurateManager extends Thread{
 		//TODO: ループの生成プログラムを書く
 		loopManager = new LoopManager(massManager.getVariableNum(), massManager);
 		loopManager.generateLoop();
+		loopManager.generateLogicalEquation();
 	}
 }
