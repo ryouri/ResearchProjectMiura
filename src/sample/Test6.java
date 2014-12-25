@@ -16,8 +16,8 @@ public class Test6 extends PApplet {
 	}
 
 	public void draw(){
-		fadeToBlack();
-		//fadeToWhite();
+		//fadeToBlack();
+		fadeToWhite();
 		kirakira();
 		//bable();
 
