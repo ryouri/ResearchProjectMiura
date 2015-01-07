@@ -12,8 +12,8 @@ public class Variable5_01 extends PApplet{
 		smooth();
 	}
 
-	final int massW = 30;
-	final int massH = 25;
+	static final int massW = 30;
+	static final int massH = 25;
 
 	int[][] shinri = {
 				{0,0,0,0,0},
