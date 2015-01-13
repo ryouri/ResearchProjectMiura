@@ -85,9 +85,12 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		drawLine(1);
 		drawLetter("A", "B", "C", "D");
 
-		// textSize(10);
-		// text("■",10,10);
-		// rect(0,0,10,10);
+		//ループの描画
+
+
+
+
+
 	}
 
 	// マス描画
