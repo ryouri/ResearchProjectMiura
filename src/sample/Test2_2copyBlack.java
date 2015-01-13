@@ -1,15 +1,16 @@
 package sample;
 /*
  * 4変数
- * 背景白．マスの枠と文字が黒
+ * 背景黒．マスの面白，マスの枠と文字が黒
  */
 import processing.core.PApplet;
 //import sample.Test6;
 
-public class Test2_2copy extends PApplet {
+public class Test2_2copyBlack extends PApplet {
 	public void setup() {
 		size(400, 400);
-		background(255,255,255);
+		//background(255,255,255);
+		background(0,0,0);
 		smooth();
 	}
 
@@ -87,7 +88,8 @@ public class Test2_2copy extends PApplet {
 
 	//マス描画
 	public void drawSquare(int i,int j){
-		noFill();//塗りつぶしなし
+		//noFill();//塗りつぶしなし
+		fill(255);
 		stroke(0,0,0);//枠線の色(黒)
 		rect(massW*j,massH*i,massW,massH);
 	}
