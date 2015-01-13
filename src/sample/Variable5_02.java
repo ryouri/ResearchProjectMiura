@@ -5,6 +5,9 @@ package sample;
  * ‘１’の描画がうまくいかない
  */
 import processing.core.PApplet;
+import researchproject.drawmodule.calc.CalcurateManager;
+import researchproject.drawmodule.mass.Mass;
+import researchproject.drawmodule.mass.MassManager;
 
 public class Variable5_02 extends PApplet{
 	public void setup() {
@@ -18,6 +21,24 @@ public class Variable5_02 extends PApplet{
 
 	int[][] shinri = {{0,0,0,0,0},{1,1,0,0,0},{1,0,1,0,0},{0,0,1,1,0},//表(上)
 					  {1,1,1,1,1},{1,1,1,1,1},{1,0,0,0,1},{0,0,1,1,1}};//表(下)
+
+
+	//三澤が追加したもの
+	private MassManager massManager;
+
+	private Mass[][][] massArray;
+
+	private CalcurateManager calcurateManager;
+
+	public void setMassManager(MassManager massManager) {
+		this.massManager = massManager;
+		this.massArray = massManager.getMassArray();
+	}
+
+	public void setCalcurateManager(CalcurateManager calcurateManager) {
+		this.calcurateManager = calcurateManager;
+	}
+
 
 	public void draw(){
 		//座標軸の中心を移動
