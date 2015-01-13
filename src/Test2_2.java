@@ -1,5 +1,7 @@
 import processing.core.PApplet;
-
+/*
+ * 4変数プロトタイプ
+ */
 public class Test2_2 extends PApplet {
 	public void setup() {
 		size(400, 400);
