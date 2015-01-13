@@ -1,7 +1,11 @@
 package researchproject.drawmodule;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import researchproject.drawmodule.calc.CalcurateManager;
+import researchproject.drawmodule.loop.Loop;
+import researchproject.drawmodule.loop.LoopManager;
 import researchproject.drawmodule.mass.Mass;
 import researchproject.drawmodule.mass.MassManager;
 
@@ -9,20 +13,32 @@ import researchproject.drawmodule.mass.MassManager;
  * このクラス単体で実行するとバグります
  * DrawManagerから実行してください
  */
-public class KarnaughMapDrawer extends PApplet {
+public class KarnaughMapVariable4Drawer extends PApplet {
+	//三澤が追加したもの
 	private MassManager massManager;
 
 	private Mass[][][] massArray;
 
 	private CalcurateManager calcurateManager;
 
+	private LoopManager loopManager;
+
+	/**
+	 * 処理してもらいたいループが格納される
+	 */
+	private ArrayList<Loop> proccessLoopArray;
+
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
 		this.massArray = massManager.getMassArray();
 	}
-
 	public void setCalcurateManager(CalcurateManager calcurateManager) {
 		this.calcurateManager = calcurateManager;
+		this.loopManager = calcurateManager.getLoopManager();
+		//proccessLoopArrayにアクセスするときは，下のようにsynchronized構文を使って
+		synchronized (loopManager.getProccessLoopArray()) {
+			this.proccessLoopArray = loopManager.getProccessLoopArray();
+		}
 	}
 
 	public void setup() {

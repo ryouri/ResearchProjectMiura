@@ -8,6 +8,10 @@ public class CalcurateManager extends Thread{
 
 	private LoopManager loopManager;
 
+	public LoopManager getLoopManager() {
+		return loopManager;
+	}
+
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
 	}
@@ -21,4 +25,6 @@ public class CalcurateManager extends Thread{
 		loopManager.generateLoop();
 		loopManager.generateLogicalEquation();
 	}
+
+
 }

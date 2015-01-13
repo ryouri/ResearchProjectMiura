@@ -1,15 +1,19 @@
-package sample;
+package researchproject.drawmodule;
 /*
  * ５変数
  * 背景：黒，マス：白に塗りつぶし
  * ‘１’の描画がうまくいかない
  */
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import researchproject.drawmodule.calc.CalcurateManager;
+import researchproject.drawmodule.loop.Loop;
+import researchproject.drawmodule.loop.LoopManager;
 import researchproject.drawmodule.mass.Mass;
 import researchproject.drawmodule.mass.MassManager;
 
-public class Variable5_02 extends PApplet{
+public class KarnaughMapVariable5Drawer extends PApplet{
 	public void setup() {
 		size(500, 500,OPENGL);
 		background(0,0,0);
@@ -30,13 +34,24 @@ public class Variable5_02 extends PApplet{
 
 	private CalcurateManager calcurateManager;
 
+	private LoopManager loopManager;
+
+	/**
+	 * 処理してもらいたいループが格納される
+	 */
+	private ArrayList<Loop> proccessLoopArray;
+
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
 		this.massArray = massManager.getMassArray();
 	}
-
 	public void setCalcurateManager(CalcurateManager calcurateManager) {
 		this.calcurateManager = calcurateManager;
+		this.loopManager = calcurateManager.getLoopManager();
+		//proccessLoopArrayにアクセスするときは，下のようにsynchronized構文を使って
+		synchronized (loopManager.getProccessLoopArray()) {
+			this.proccessLoopArray = loopManager.getProccessLoopArray();
+		}
 	}
 
 

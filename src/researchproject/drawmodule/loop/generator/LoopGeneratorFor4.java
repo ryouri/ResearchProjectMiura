@@ -132,8 +132,10 @@ public class LoopGeneratorFor4 extends LoopGenerator{
 	 */
 	private void addSuccessLoop(Loop targetLoop) {
 		//そもそも配列のサイズが0なら追加する
-		if (successLoopArray.size() == 0) {
-			successLoopArray.add(targetLoop);
+		synchronized (proccessLoopArray) {
+			if (successLoopArray.size() == 0) {
+				successLoopArray.add(targetLoop);
+			}
 		}
 
 		//全ての既に格納されているループに含まれていなければ，追加する

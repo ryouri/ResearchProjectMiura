@@ -38,7 +38,9 @@ public abstract class LoopGenerator {
 		this.loopManager = loopManager;
 		this.varNum = loopManager.getVarNum();
 		this.massManager = loopManager.getMassManager();
-		this.successLoopArray = loopManager.getSuccessLoopArray();
+		synchronized(loopManager.getSuccessLoopArray()) {
+			this.successLoopArray = loopManager.getSuccessLoopArray();
+		}
 		this.allLoopArray = loopManager.getAllLoopArray();
 		this.proccessLoopArray = loopManager.getProccessLoopArray();
 	}
