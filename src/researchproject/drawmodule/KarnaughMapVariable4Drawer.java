@@ -59,6 +59,8 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		int j = 0;// 配列の列番号に対応
 
 		scale(1.5f);// 表全体の大きさを操作
+
+		//表の枠を描画
 		for (i = 0; i < 4; i++) {
 			for (j = 0; j < 4; j++) {
 				drawSquare(i, j);
