@@ -3,9 +3,10 @@ package sample;
  * ループの色を格納
  */
 
-public class LoopColor {
+import processing.core.PApplet;
 
-	public static void main(String args[]){
+public class LoopColor extends PApplet{
+
 
 		int loopCount = LoopDraw.getLoopCounter();
 		int loopColorList[][] = {{1,213,132,224},{2,84,77,203},{3,82,162,197},
@@ -17,7 +18,11 @@ public class LoopColor {
 		int loopG = loopColorList[loopCount][2];
 		int loopB = loopColorList[loopCount][3];
 
-
+	public void getLoopColor(){
+		int r = loopR;
+		int g = loopG;
+		int b = loopB;
+		fill(r,g,b,10);
 	}
 
 }
