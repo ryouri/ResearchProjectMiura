@@ -1,6 +1,8 @@
 package researchproject.drawmodule;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import processing.core.PApplet;
 import researchproject.drawmodule.calc.CalcurateManager;
@@ -45,6 +47,30 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		size(400, 400);
 		background(255, 255, 255);
 		smooth();
+
+	}
+
+	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
+	boolean drawFlag;
+	public void start() {
+		super.start();
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+	        public void run() {
+	           if(!proccessLoopArrayFlag){
+	        	   //proccessLoopArrayの0番目の要素を読み込む
+	        	   //ループ部分に色をつける
+	        	   //proccessLoopArrayの0番目の要素をremove
+	        	   drawFlag = true;
+	           }else{
+	        	   //drawFlag = false;
+	        	   //task.cancel();
+	           }
+
+	        }
+	    };
+
+	    timer.schedule(task, 2000L, 500L);
 	}
 
 	final int massW = 36;
@@ -88,6 +114,11 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		//ループの描画
 
 
+		//白にフェードアウト
+		fadeToWhite();
+
+
+
 
 
 
@@ -112,7 +143,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	// マスに色をつける
 	public void draw2(int i, int j) {
 
-		fill(135, 206, 250, 10);
+		fill(135, 206, 250, 40);
 		rect(massW * j, massH * i, massW, massH);
 	}
 
@@ -132,4 +163,13 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		text(c + d, -massW + massW / 3, -massH + massH / 3);
 		text(a + b, -massW, 0);
 	}
+
+	//白にフェード
+	public void fadeToWhite() {
+		noStroke();
+		fill(255, 20);//fill(color,alpha)
+		rectMode(CORNER);
+		rect(0, 0, width, height);
+	}
+
 }

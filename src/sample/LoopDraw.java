@@ -46,9 +46,10 @@ public class LoopDraw extends PApplet{
 	}
 
 	//計算中のループ描画
-	public static void getCaluculatingLoopDraw(){
-		//計算中ループ情報を読み込む
+	public void CaluculatingLoopDraw(int i, int j){
 
+		fill(175,238,238);
+		rect(Variable5_01.massW * j, Variable5_01.massH * i, Variable5_01.massW, Variable5_01.massH);
 	}
 
 	//roop情報を受け取ってループ部分に色をつける
@@ -91,6 +92,11 @@ public class LoopDraw extends PApplet{
 		System.out.println( loopColorList[loopCount][0] );
 		int d[] = getLoopColor();
 		System.out.println( d[0]+"\t"+d[1]+"\t"+d[2] );
+
+		int a = d[0];
+		int b = d[1];
+		int c = d[2];
+		System.out.println(a+"\t"+b+"\t"+c);
 	}
 
 
