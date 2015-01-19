@@ -58,7 +58,12 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		TimerTask task = new TimerTask() {
 	        public void run() {
 	           if(!proccessLoopArrayFlag){
-	        	   //proccessLoopArrayの0番目の要素を読み込む
+
+	        	//proccessLoopArrayの0番目の要素を読み込む
+	       		synchronized (loopManager.getProccessLoopArray()) {
+	       			//this.proccessLoopArray = loopManager.getProccessLoopArray();
+	       		}
+	       		//processLoopArray.get(0);
 	        	   //ループ部分に色をつける
 	        	   //proccessLoopArrayの0番目の要素をremove
 	        	   drawFlag = true;
@@ -117,6 +122,8 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 		//白にフェードアウト
 		fadeToWhite();
+
+
 
 
 	}

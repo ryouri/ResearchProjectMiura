@@ -4,6 +4,7 @@ package sample;
  * タイマーつき
  */
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,28 +22,44 @@ public class TimerSample extends PApplet{
 
 	}
 
-	boolean drawFlag;
+	boolean animationDrawFlag;
+	ArrayList<Integer> ar = new ArrayList<Integer>();
+	//ar.add(10);
+
 
 
 	public void start() {
 		super.start();
+		//task : 定期的にanimationDrawFlagをtrueにする
 		TimerTask task = new TimerTask() {
 	        public void run() {
-	            drawFlag = false;
+	            animationDrawFlag = true;
+	            //task2 : 一定時間が経ったらanimationDrawFlagをfalseにする
+	            TimerTask task2 = new TimerTask(){
+	            	public void run(){
+	            		animationDrawFlag = false;
+	            	}
+	            };
+	            Timer timer2 = new Timer();
+	            timer2.schedule(task2, 1500L);
 
 	        }
 	    };
 	    Timer timer = new Timer();
-	    drawFlag = true;
-	    timer.schedule(task, 2000L);
+	    //animationDrawFlag = true;
+	    timer.schedule(task, 1000L,1500L);
+
+
 	}
 
 	public void draw(){
 		//fadeToBlack();
 		fadeToWhite();
-		if(drawFlag){
+		if(animationDrawFlag){
 			kirakira();
 		}
+
+
 
 	}
 
