@@ -34,11 +34,12 @@ public class TimerSample extends PApplet{
 	    };
 	    Timer timer = new Timer();
 	    drawFlag = true;
-	    timer.schedule(task, 1500L);
+	    timer.schedule(task, 2000L);
 	}
 
 	public void draw(){
-		fadeToBlack();
+		//fadeToBlack();
+		fadeToWhite();
 		if(drawFlag){
 			kirakira();
 		}
@@ -93,6 +94,15 @@ public class TimerSample extends PApplet{
 		rectMode(CORNER);
 		rect(0, 0, width, height);
 	}
+
+	//白にフェードアウト
+	void fadeToWhite() {
+		noStroke();
+		fill(255,10);//fill(color,alpha)
+		rectMode(CORNER);
+		rect(0, 0, width, height);
+	}
+
 
 
 }

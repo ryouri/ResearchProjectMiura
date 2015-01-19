@@ -63,7 +63,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	        	   //proccessLoopArrayの0番目の要素をremove
 	        	   drawFlag = true;
 	           }else{
-	        	   //drawFlag = false;
+	        	   drawFlag = false;
 	        	   //task.cancel();
 	           }
 
@@ -71,6 +71,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	    };
 
 	    timer.schedule(task, 2000L, 500L);
+
 	}
 
 	final int massW = 36;
@@ -116,10 +117,6 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 		//白にフェードアウト
 		fadeToWhite();
-
-
-
-
 
 
 	}
