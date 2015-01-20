@@ -66,8 +66,8 @@ public class Variable5_01 extends PApplet{
 			}
 		}
 
-		//表0(上)に１を埋める
-		int count = 0;
+		//表0(上)に１を埋める(k=0,1,2,3)
+		int count = 0;//shinri[k][4]==0のときだけcount++
 		for(int k = 0; k<shinri.length; k++){
 			if( shinri[k][4] == 0){
 				for(int l = 0; l<shinri[k].length-1; l++){
@@ -79,8 +79,8 @@ public class Variable5_01 extends PApplet{
 			}
 		}
 
-		//表1(下)に１を埋める
-		count = 0;
+		//表1(下)に１を埋める(k=4,5,6,7)
+		count = 0;//shinri[k][4]==1のときだけcount++
 		for(int k = 0; k<shinri.length; k++){
 			if( shinri[k][4] == 1){
 				for(int l = 0; l<shinri[k].length-1; l++){

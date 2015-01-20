@@ -75,8 +75,11 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 	    	       		//計算中ループの描画
 	    	       		CaluculatingLoopDraw(proccessY,proccessX);
+	    	       		System.out.println("X = "+proccessX+",Y = "+proccessY);
+
 	       			}
 	       		}
+	       		System.out.println("------------------------------------");
 
 	       		//先頭をremove
 	       		proccessLoopArray.remove(0);

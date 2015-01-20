@@ -5,11 +5,14 @@ package researchproject.drawmodule;
  * ‘１’の描画がうまくいかない
  */
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import processing.core.PApplet;
 import researchproject.drawmodule.calc.CalcurateManager;
 import researchproject.drawmodule.loop.Loop;
 import researchproject.drawmodule.loop.LoopManager;
+import researchproject.drawmodule.loop.LoopUnit;
 import researchproject.drawmodule.mass.Mass;
 import researchproject.drawmodule.mass.MassManager;
 
@@ -53,6 +56,66 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 			this.proccessLoopArray = loopManager.getProccessLoopArray();
 		}
 	}
+
+	//------
+
+		boolean proccessDrawFlag;
+		Loop proccessPlace;
+
+		public void start() {
+			super.start();
+			Timer timer = new Timer();
+			TimerTask task = new TimerTask() {
+				int proccessX;
+	        	int proccessY;
+	        	int proccessZ;
+		        public void run() {
+		        	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
+
+		           if(!proccessLoopArrayFlag){
+      					int x = 10;
+      					int y = 40;
+      					int z = -60;
+
+		        	//proccessLoopArrayの0番目の要素を読み込む
+		       		synchronized (loopManager.getProccessLoopArray()) {
+		       			proccessPlace = proccessLoopArray.get(0);
+		       			for (LoopUnit loopUnit : proccessPlace.getLoopUnitArray()) {
+		       				proccessY = loopUnit.getY();
+		       				proccessX = loopUnit.getX();
+		       				proccessZ = loopUnit.getZ();
+
+		    	       		//計算中ループの描画
+		       				if(proccessZ == 0){
+		       					CaluculatingLoopDraw(proccessY,proccessX);
+		       				}else{
+		       				//座標軸の移動
+		       					translate(x,y,z);
+		       					CaluculatingLoopDraw(proccessY,proccessX);
+		       				}
+
+		    	       //		System.out.println("X = "+proccessX+",Y = "+proccessY);
+
+		       			}
+		       		}
+		       		//System.out.println("------------------------------------");
+
+		       		//先頭をremove
+		       		proccessLoopArray.remove(0);
+		       		translate(-x,-y,-z);//座標を戻す
+
+		        	  // proccessDrawFlag = true;
+		           }else{
+		        	 //  proccessDrawFlag = false;
+		           }
+
+		        }
+		    };
+
+		    timer.schedule(task, 2000L, 500L);
+
+		}
+	//------
 
 
 	public void draw(){
@@ -168,7 +231,19 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		text("1",massW/3+massW*j,15+massH*i,0);
 	}
 
+	//計算中のループ描画
+		public void CaluculatingLoopDraw(int i, int j){
+			fill(175,238,238);
+			rect(massW * j, massH * i, massW, massH);
 
+		}
+	//白にフェード
+	public void fadeToWhite() {
+		noStroke();
+		fill(255, 20);//fill(color,alpha)
+		rectMode(CORNER);
+		rect(0, 0, width, height);
+	}
 
 
 	//点線を描く
