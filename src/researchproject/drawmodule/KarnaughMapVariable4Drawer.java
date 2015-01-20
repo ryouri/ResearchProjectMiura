@@ -49,9 +49,11 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		smooth();
 
 	}
-
+//------
 	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
-	boolean drawFlag;
+	boolean proccessDrawFlag;
+	Loop proccessPlace;
+
 	public void start() {
 		super.start();
 		Timer timer = new Timer();
@@ -61,14 +63,18 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 	        	//proccessLoopArrayの0番目の要素を読み込む
 	       		synchronized (loopManager.getProccessLoopArray()) {
-	       			//this.proccessLoopArray = loopManager.getProccessLoopArray();
+	       			proccessPlace = proccessLoopArray.get(0);
 	       		}
-	       		//processLoopArray.get(0);
-	        	   //ループ部分に色をつける
-	        	   //proccessLoopArrayの0番目の要素をremove
-	        	   drawFlag = true;
+
+	       		//先頭をremove
+	       		proccessLoopArray.remove(0);
+
+	       		//計算中ループの描画
+	       		//CaluculatingLoopDraw(proccessPlace,);
+
+	        	   proccessDrawFlag = true;
 	           }else{
-	        	   drawFlag = false;
+	        	   proccessDrawFlag = false;
 	        	   //task.cancel();
 	           }
 
@@ -78,7 +84,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	    timer.schedule(task, 2000L, 500L);
 
 	}
-
+//------
 	final int massW = 36;
 	final int massH = 30;
 
@@ -166,6 +172,12 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		fill(0, 0, 0);
 		text(c + d, -massW + massW / 3, -massH + massH / 3);
 		text(a + b, -massW, 0);
+	}
+
+	//計算中のループ描画
+	public void CaluculatingLoopDraw(int i, int j){
+		fill(175,238,238);
+		rect(massW * j, massH * i, massW, massH);
 	}
 
 	//白にフェード
