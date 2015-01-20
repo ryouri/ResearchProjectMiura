@@ -8,6 +8,7 @@ import processing.core.PApplet;
 import researchproject.drawmodule.calc.CalcurateManager;
 import researchproject.drawmodule.loop.Loop;
 import researchproject.drawmodule.loop.LoopManager;
+import researchproject.drawmodule.loop.LoopUnit;
 import researchproject.drawmodule.mass.Mass;
 import researchproject.drawmodule.mass.MassManager;
 
@@ -50,7 +51,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 	}
 //------
-	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
+
 	boolean proccessDrawFlag;
 	Loop proccessPlace;
 
@@ -58,23 +59,31 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		super.start();
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
+			int proccessX;
+        	int proccessY;
 	        public void run() {
+	        	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
+
 	           if(!proccessLoopArrayFlag){
 
 	        	//proccessLoopArrayの0番目の要素を読み込む
 	       		synchronized (loopManager.getProccessLoopArray()) {
 	       			proccessPlace = proccessLoopArray.get(0);
+	       			for (LoopUnit loopUnit : proccessPlace.getLoopUnitArray()) {
+	       				proccessY = loopUnit.getY();
+	       				proccessX = loopUnit.getX();
+
+	    	       		//計算中ループの描画
+	    	       		CaluculatingLoopDraw(proccessY,proccessX);
+	       			}
 	       		}
 
 	       		//先頭をremove
 	       		proccessLoopArray.remove(0);
 
-	       		//計算中ループの描画
-	       		//CaluculatingLoopDraw(proccessPlace,);
-
-	        	   proccessDrawFlag = true;
+	        	  // proccessDrawFlag = true;
 	           }else{
-	        	   proccessDrawFlag = false;
+	        	 //  proccessDrawFlag = false;
 	        	   //task.cancel();
 	           }
 
@@ -115,7 +124,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 			for (int l = 0; l < oneTableMassArray[k].length; l++) {
 				if (oneTableMassArray[k][l].getState() == Mass.STATE_ONE) {
 					drawText(k, l);
-					draw2(k, l);
+					//draw2(k, l);
 				}
 			}
 		}
