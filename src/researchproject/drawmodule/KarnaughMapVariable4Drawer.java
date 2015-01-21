@@ -134,9 +134,19 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 						if (nowProccessResultLoopIndex < processLoopArraySize) {
 							// ある結果の処理すべきLoopが残っている
 							nowProccessResultLoopIndex++;
+							try {
+								Thread.sleep(300);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 						} else {
 							nowProccessResultLoopIndex = 0;
 							// ある結果のLoopは全て描画し終えた
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
 
 							int resultArraySize = resultLoop2Array.size() - 1;
 							if (nowProccessResultIndex < resultArraySize) {
@@ -150,7 +160,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 			}
 		};
 
-	    timer.schedule(task, 2000L, 500L);
+	    timer.schedule(task, 2000L, 200L);
 
 	}
 //------
