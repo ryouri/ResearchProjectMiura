@@ -143,7 +143,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 		};
 
-	    timer.schedule(task, 2000L, 500L);
+	    timer.schedule(task, 2000L, 100L);
 
 	}
 //------
