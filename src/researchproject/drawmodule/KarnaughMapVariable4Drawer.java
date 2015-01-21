@@ -33,6 +33,11 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 	private ArrayList<Loop> successLoopArray;
 
+	/**
+	 * 最終的に結果として出力するループが格納される
+	 */
+	private ArrayList<ArrayList<Loop>> resultLoop2Array;
+
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
 		this.massArray = massManager.getMassArray();
@@ -65,6 +70,15 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 			int proccessY;
 
 			public void run() {
+				//Loop生成の終了チェック用の処理を追加
+				//nullじゃなければfieldの変数に参照を代入
+				if (loopManager.getResultLoop2Array() != null) {
+					synchronized (loopManager.getResultLoop2Array()) {
+						resultLoop2Array = loopManager.getResultLoop2Array();
+					}
+				}
+
+
 				boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
 
 				if (!proccessLoopArrayFlag) {

@@ -35,6 +35,11 @@ public class LoopManager{
 	 */
 	private ArrayList<Loop> proccessLoopArray;
 
+	/**
+	 * 最終的に結果として出力するループが格納される
+	 */
+	private ArrayList<ArrayList<Loop>> resultLoop2Array;
+
 
 
 	public int getVarNum() {
@@ -143,5 +148,15 @@ public class LoopManager{
 		}
 
 		System.out.println(logicalEquation);
+
+		//デバッグ用の処理
+		//resultLoop2Arrayにテスト用のArrayを追加
+		resultLoop2Array = new ArrayList<ArrayList<Loop>>();
+		resultLoop2Array.add(successLoopArray);
+		resultLoop2Array.add(successLoopArray);
+	}
+
+	public ArrayList<ArrayList<Loop>> getResultLoop2Array() {
+		return resultLoop2Array;
 	}
 }
