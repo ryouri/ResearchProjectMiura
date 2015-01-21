@@ -68,15 +68,17 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		TimerTask task = new TimerTask() {
 			int proccessX;
 			int proccessY;
+			ArrayList<Loop> nowproccessResultArray;
+			Loop nowproccessResultLoopArray;
+			LoopUnit resultLoop;
+			int nowproccessResultIndex=0;
+			int nowproccessResultLoopIndex=0;
+			int nowLoopIndex = 0;
+			int resultX;
+			int resultY;
 
 			public void run() {
-				//Loop生成の終了チェック用の処理を追加
-				//nullじゃなければfieldの変数に参照を代入
-				if (loopManager.getResultLoop2Array() != null) {
-					synchronized (loopManager.getResultLoop2Array()) {
-						resultLoop2Array = loopManager.getResultLoop2Array();
-					}
-				}
+
 
 
 				boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
@@ -86,30 +88,54 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 					// proccessLoopArrayの0番目の要素を読み込む
 					synchronized (loopManager.getProccessLoopArray()) {
 						proccessPlace = proccessLoopArray.get(0);
-						for (LoopUnit loopUnit : proccessPlace
-								.getLoopUnitArray()) {
+						for (LoopUnit loopUnit : proccessPlace.getLoopUnitArray()) {
 							proccessY = loopUnit.getY();
 							proccessX = loopUnit.getX();
 
 							// 計算中ループの描画
 							CaluculatingLoopDraw(proccessY, proccessX);
-							System.out.println("X = " + proccessX + ",Y = "
-									+ proccessY);
 
 						}
 					}
-					System.out.println("------------------------------------");
 
 					// 先頭をremove
 					proccessLoopArray.remove(0);
 
-					// proccessDrawFlag = true;
-				} else {
-					// proccessDrawFlag = false;
-					// task.cancel();
+				//Loop生成の終了チェック用の処理を追加
+				//nullじゃなければfieldの変数に参照を代入
+				} else if (loopManager.getResultLoop2Array() != null){
+					synchronized (loopManager.getResultLoop2Array()) {
+
+						resultLoop2Array = loopManager.getResultLoop2Array();
+
+						nowproccessResultArray = resultLoop2Array.get(nowproccessResultIndex);
+
+						for (int i = 0; i < nowproccessResultArray.size(); i++) {
+							nowproccessResultLoopArray = nowproccessResultArray.get(i);
+
+							for (LoopUnit resultLoop : nowproccessResultLoopArray.getLoopUnitArray()) {
+								resultX = resultLoop.getX();
+								resultY = resultLoop.getY();
+
+								// 決定ループの描画
+								resultLoopDraw(resultY, resultX);
+							}
+						}
+
+						if( nowproccessResultIndex < resultLoop2Array.size()){
+							nowproccessResultIndex++;
+						}else if(nowproccessResultIndex >= resultLoop2Array.size() ){
+							nowproccessResultIndex = 0;
+						}
+
+					}
+
+
 				}
 
 			}
+
+
 		};
 
 	    timer.schedule(task, 2000L, 500L);
@@ -208,6 +234,12 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	//計算中のループ描画
 	public void CaluculatingLoopDraw(int i, int j){
 		fill(175,238,238);
+		rect(massW * j, massH * i, massW, massH);
+	}
+
+	//決定ループ描画
+	public void resultLoopDraw(int i, int j){
+		fill(84,77,203,20);
 		rect(massW * j, massH * i, massW, massH);
 	}
 
