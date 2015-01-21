@@ -1,17 +1,9 @@
 package researchproject.inputmodule;
-import processing.core.*; 
-import processing.data.*; 
-import processing.event.*; 
-import processing.opengl.*; 
+import java.io.PrintWriter;
 
-import java.util.HashMap; 
-import java.util.ArrayList; 
-import java.io.File; 
-import java.io.BufferedReader; 
-import java.io.PrintWriter; 
-import java.io.InputStream; 
-import java.io.OutputStream; 
-import java.io.IOException; 
+import processing.core.PApplet;
+import processing.core.PFont;
+import researchproject.drawmodule.DrawManager;
 
 public class radio extends PApplet {
 
@@ -765,12 +757,17 @@ public void mouseClicked(){
         writer.println("1,1,1,1,"+options[radioButton15.getValue()]);       
         writer.flush();
         writer.close();
+        
+        //三澤 20150122
+        //描画プログラムの実行
+        new DrawManager("input4.csv");
       }
        if(mouseX>=249 && mouseX<=269 && mouseY>=17 && mouseY<=27){
         stat=2;
       }else if(mouseX>=249 && mouseX<=269 && mouseY>=70 && mouseY<=80){
         stat=0;
       }
+       
       break;
 ///////////////////////////////////////////////////////       
     case 0:

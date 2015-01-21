@@ -23,6 +23,12 @@ public class DrawManager {
 		calcurateManager.setMassManager(massManager);
 		calcurateManager.start();
 
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 		//4変数
 		//カルノー図描画クラスを生成し，Mass管理クラスを渡す
 		KarnaughMapVariable4Drawer karnaughMapDrawer = new KarnaughMapVariable4Drawer();

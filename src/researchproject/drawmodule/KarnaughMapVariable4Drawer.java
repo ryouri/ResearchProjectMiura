@@ -72,7 +72,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 			Loop nowproccessResultLoopArray;
 			//LoopUnit resultLoop;
 			int nowproccessResultIndex=0;
-			//int nowproccessResultLoopIndex=0;
+			int nowproccessResultLoopIndex=0;
 			//int nowLoopIndex = 0;
 			int resultX;
 			int resultY;
@@ -108,10 +108,12 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 						resultLoop2Array = loopManager.getResultLoop2Array();
 
+						//インデックスが指す，ある結果を表示する
 						nowproccessResultArray = resultLoop2Array.get(nowproccessResultIndex);
 						//System.out.println("----"+nowproccessResultIndex+"----");//デバッグ用
 						//System.out.println("nowproccessResultArray.size() = "+nowproccessResultArray.size());
 
+						
 						for (int i = 0; i < nowproccessResultArray.size(); i++) {
 							nowproccessResultLoopArray = nowproccessResultArray.get(i);
 							//System.out.println("ArrayList<ArrayList> i = "+i);

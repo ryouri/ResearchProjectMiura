@@ -38,7 +38,7 @@ public class MassManager {
 	private void loadTruthTable(String filePath) {
 		try {
 			//ファイルを展開
-			File file = new File("./inputTruthTable.csv");
+			File file = new File(inputCSVPath);
 			BufferedReader br = new BufferedReader(new FileReader(file));
 
 			//1行目を読み込み，分割
