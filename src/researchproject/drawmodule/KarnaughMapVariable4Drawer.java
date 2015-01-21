@@ -37,6 +37,8 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	 * 最終的に結果として出力するループが格納される
 	 */
 	private ArrayList<ArrayList<Loop>> resultLoop2Array;
+	
+	private ArrayList<String> resultStringArray;
 
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
@@ -61,6 +63,11 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 	boolean proccessDrawFlag;
 	Loop proccessPlace;
+	
+	//LoopUnit resultLoop;
+	//文字列の描画に用いるために，Timerクラスから出した
+	int nowProccessResultIndex=0;
+	int nowProccessResultLoopIndex=0;
 
 	public void start() {
 		super.start();
@@ -70,17 +77,11 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 			int proccessY;
 			ArrayList<Loop> nowproccessResultArray;
 			Loop nowproccessResultLoopArray;
-			//LoopUnit resultLoop;
-			int nowProccessResultIndex=0;
-			int nowProccessResultLoopIndex=0;
 			//int nowLoopIndex = 0;
 			int resultX;
 			int resultY;
 
 			public void run() {
-
-
-
 				boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
 
 				if (!proccessLoopArrayFlag) {
@@ -108,6 +109,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 				//nullじゃなければfieldの変数に参照を代入
 				} else if (loopManager.getResultLoop2Array() != null){
 					synchronized (loopManager.getResultLoop2Array()) {
+						resultStringArray = loopManager.getResultStringArray();
 
 						resultLoop2Array = loopManager.getResultLoop2Array();
 
@@ -115,6 +117,9 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 						nowproccessResultArray = resultLoop2Array.get(nowProccessResultIndex);
 						//System.out.println("----"+nowproccessResultIndex+"----");//デバッグ用
 						//System.out.println("nowproccessResultArray.size() = "+nowproccessResultArray.size());
+						
+						//結果の文字列を表示する
+						
 
 						//ある結果のあるLoopを処理する
 						Loop nowProccessLoop = nowproccessResultArray.get(nowProccessResultLoopIndex);
@@ -128,6 +133,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 							resultLoopDraw(resultY, resultX);
 							//System.out.println("x = "+resultX+" ,y = "+resultY);
 						}
+						
 
 						// LoopArrayのサイズを保存
 						int processLoopArraySize = nowproccessResultArray.size() - 1;
@@ -201,16 +207,15 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 		drawLine(1);
 		drawLetter("A", "B", "C", "D");
-
-		//ループの描画
-
+		
+		//結果の論理式の描画
+		//TODO: Synchoronized構文を入れるとバグるよ，気をつけて
+		if (resultStringArray != null){
+			text(resultStringArray.get(nowProccessResultIndex), -50, 150);
+		}
 
 		//白にフェードアウト
 		fadeToWhite();
-
-
-
-
 	}
 
 	// マス描画
@@ -267,7 +272,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 	//決定ループ描画
 	public void resultLoopDraw(int i, int j){
-		fill(84,77,203,20);
+		fill(84,77,203,75);
 		rect(massW * j, massH * i, massW, massH);
 	}
 

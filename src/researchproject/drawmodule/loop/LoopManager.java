@@ -39,8 +39,16 @@ public class LoopManager{
 	 * 最終的に結果として出力するループが格納される
 	 */
 	private ArrayList<ArrayList<Loop>> resultLoop2Array;
+	/**
+	 * 最終的に結果として出力する論理式の文字列が格納される
+	 */
+	private ArrayList<String> resultStringArray;
 
 
+
+	public ArrayList<String> getResultStringArray() {
+		return resultStringArray;
+	}
 
 	public int getVarNum() {
 		return varNum;
@@ -146,9 +154,16 @@ public class LoopManager{
 			}
 			logicalEquation += " + ";
 		}
-
+		
+		logicalEquation = logicalEquation.substring(0, logicalEquation.lastIndexOf(" + "));
+		logicalEquation = logicalEquation.replace(" ", "");
+		
 		System.out.println(logicalEquation);
-
+		
+		resultStringArray = new ArrayList<String>();
+		resultStringArray.add(logicalEquation);
+		resultStringArray.add(logicalEquation);
+		
 		//デバッグ用の処理
 		//resultLoop2Arrayにテスト用のArrayを追加
 		resultLoop2Array = new ArrayList<ArrayList<Loop>>();
