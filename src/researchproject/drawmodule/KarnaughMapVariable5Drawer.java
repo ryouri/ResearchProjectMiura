@@ -19,8 +19,10 @@ import researchproject.drawmodule.mass.MassManager;
 public class KarnaughMapVariable5Drawer extends PApplet{
 	public void setup() {
 		size(500, 500,OPENGL);
-		background(0,0,0);
+		//background(0,0,0);//黒
+		background(255,255,255);//白
 		smooth();
+		//frameRate(30);//フレームレート
 	}
 
 	final int massW = 30;
@@ -61,14 +63,15 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 		boolean proccessDrawFlag;
 		Loop proccessPlace;
+		int proccessX;
+    	int proccessY;
+    	int proccessZ;
 
 		public void start() {
 			super.start();
 			Timer timer = new Timer();
 			TimerTask task = new TimerTask() {
-				int proccessX;
-	        	int proccessY;
-	        	int proccessZ;
+
 		        public void run() {
 		        	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
 
@@ -86,13 +89,13 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		       				proccessZ = loopUnit.getZ();
 
 		    	       		//計算中ループの描画
-		       				if(proccessZ == 0){
-		       					CaluculatingLoopDraw(proccessY,proccessX);
-		       				}else{
+		       			//	if(proccessZ == 0){
+		       			//		CaluculatingLoopDraw(proccessY,proccessX);
+		       			//	}else{
 		       				//座標軸の移動
-		       					translate(x,y,z);
-		       					CaluculatingLoopDraw(proccessY,proccessX);
-		       				}
+		       			//		translate(x,y,z);
+		       			//		CaluculatingLoopDraw(proccessY,proccessX);
+		       			//	}
 
 		    	       //		System.out.println("X = "+proccessX+",Y = "+proccessY);
 
@@ -100,9 +103,12 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		       		}
 		       		//System.out.println("------------------------------------");
 
+		       		proccessDrawFlag = true;
+
 		       		//先頭をremove
 		       		proccessLoopArray.remove(0);
-		       		translate(-x,-y,-z);//座標を戻す
+
+		       		//translate(-x,-y,-z);//座標を戻す
 
 		        	  // proccessDrawFlag = true;
 		           }else{
@@ -184,6 +190,13 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		//マスに色を塗る
 		draw2(0,1);
 
+		//計算中のループの描画
+		if(proccessDrawFlag){
+			CaluculatingLoopDraw(proccessY,proccessX);
+			proccessDrawFlag = false;
+		}
+
+
 		//軸線
 		/*
 		stroke(255,0,0);
@@ -201,11 +214,14 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		dotLine(-x,-y,4,0,-z);
 		dotLine(-x,-y,4,4,-z);
 
+		//白にフェードアウト
+		fadeToWhite();
+
 	}
 
 	//マス描画
 	public void drawSquare(int i,int j){
-		fill(255);//塗りつぶしなし
+		noFill();//塗りつぶしなし//fill(255);
 		stroke(0);//枠線の色(黒)
 		strokeWeight(2);
 		rect(massW*j,massH*i,massW,massH);

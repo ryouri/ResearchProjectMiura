@@ -31,6 +31,8 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	 */
 	private ArrayList<Loop> proccessLoopArray;
 
+	private ArrayList<Loop> successLoopArray;
+
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
 		this.massArray = massManager.getMassArray();
@@ -60,38 +62,41 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			int proccessX;
-        	int proccessY;
-	        public void run() {
-	        	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
+			int proccessY;
 
-	           if(!proccessLoopArrayFlag){
+			public void run() {
+				boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
 
-	        	//proccessLoopArrayの0番目の要素を読み込む
-	       		synchronized (loopManager.getProccessLoopArray()) {
-	       			proccessPlace = proccessLoopArray.get(0);
-	       			for (LoopUnit loopUnit : proccessPlace.getLoopUnitArray()) {
-	       				proccessY = loopUnit.getY();
-	       				proccessX = loopUnit.getX();
+				if (!proccessLoopArrayFlag) {
 
-	    	       		//計算中ループの描画
-	    	       		CaluculatingLoopDraw(proccessY,proccessX);
-	    	       		System.out.println("X = "+proccessX+",Y = "+proccessY);
+					// proccessLoopArrayの0番目の要素を読み込む
+					synchronized (loopManager.getProccessLoopArray()) {
+						proccessPlace = proccessLoopArray.get(0);
+						for (LoopUnit loopUnit : proccessPlace
+								.getLoopUnitArray()) {
+							proccessY = loopUnit.getY();
+							proccessX = loopUnit.getX();
 
-	       			}
-	       		}
-	       		System.out.println("------------------------------------");
+							// 計算中ループの描画
+							CaluculatingLoopDraw(proccessY, proccessX);
+							System.out.println("X = " + proccessX + ",Y = "
+									+ proccessY);
 
-	       		//先頭をremove
-	       		proccessLoopArray.remove(0);
+						}
+					}
+					System.out.println("------------------------------------");
 
-	        	  // proccessDrawFlag = true;
-	           }else{
-	        	 //  proccessDrawFlag = false;
-	        	   //task.cancel();
-	           }
+					// 先頭をremove
+					proccessLoopArray.remove(0);
 
-	        }
-	    };
+					// proccessDrawFlag = true;
+				} else {
+					// proccessDrawFlag = false;
+					// task.cancel();
+				}
+
+			}
+		};
 
 	    timer.schedule(task, 2000L, 500L);
 
