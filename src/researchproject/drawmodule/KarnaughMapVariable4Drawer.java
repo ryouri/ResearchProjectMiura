@@ -70,10 +70,10 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 			int proccessY;
 			ArrayList<Loop> nowproccessResultArray;
 			Loop nowproccessResultLoopArray;
-			LoopUnit resultLoop;
+			//LoopUnit resultLoop;
 			int nowproccessResultIndex=0;
-			int nowproccessResultLoopIndex=0;
-			int nowLoopIndex = 0;
+			//int nowproccessResultLoopIndex=0;
+			//int nowLoopIndex = 0;
 			int resultX;
 			int resultY;
 
@@ -109,9 +109,12 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 						resultLoop2Array = loopManager.getResultLoop2Array();
 
 						nowproccessResultArray = resultLoop2Array.get(nowproccessResultIndex);
+						//System.out.println("----"+nowproccessResultIndex+"----");//デバッグ用
+						//System.out.println("nowproccessResultArray.size() = "+nowproccessResultArray.size());
 
 						for (int i = 0; i < nowproccessResultArray.size(); i++) {
 							nowproccessResultLoopArray = nowproccessResultArray.get(i);
+							//System.out.println("ArrayList<ArrayList> i = "+i);
 
 							for (LoopUnit resultLoop : nowproccessResultLoopArray.getLoopUnitArray()) {
 								resultX = resultLoop.getX();
@@ -119,12 +122,14 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 								// 決定ループの描画
 								resultLoopDraw(resultY, resultX);
+								//System.out.println("x = "+resultX+" ,y = "+resultY);
 							}
 						}
 
-						if( nowproccessResultIndex < resultLoop2Array.size()){
+						int size = resultLoop2Array.size()-1;
+						if( nowproccessResultIndex < size ){
 							nowproccessResultIndex++;
-						}else if(nowproccessResultIndex >= resultLoop2Array.size() ){
+						}else {//if(nowproccessResultIndex >= resultLoop2Array.size() ){
 							nowproccessResultIndex = 0;
 						}
 
