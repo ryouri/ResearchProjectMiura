@@ -5,7 +5,7 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import researchproject.drawmodule.DrawManager;
 
-public class radio extends PApplet {
+public class RadioInputer extends PApplet {
 
 
 
