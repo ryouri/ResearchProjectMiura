@@ -68,7 +68,7 @@ public class MainGUI {
 		
 		FileOutputStream cleartext = null;
 		try {
-			cleartext = new FileOutputStream("./result.txt");
+			cleartext = new FileOutputStream("./result.csv");
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -253,7 +253,7 @@ public class MainGUI {
 				}
 				FileOutputStream cleartext = null;
 				try {
-					cleartext = new FileOutputStream("./result.txt");
+					cleartext = new FileOutputStream("./result.csv");
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -287,7 +287,7 @@ public class MainGUI {
 		comboBox.addItem("5");
 		
 		JButton btnNewButton_11 = new JButton("+");
-		btnNewButton_11.setBounds(347, 41, 65, 25);
+		btnNewButton_11.setBounds(334, 23, 88, 25);
 		btnNewButton_11.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -296,8 +296,8 @@ public class MainGUI {
 			}
 		});
 		
-		JButton btnNewButton_12 = new JButton("\u2190");
-		btnNewButton_12.setBounds(347, 72, 65, 25);
+		JButton btnNewButton_12 = new JButton("\u2190");//Å©çÌèú
+		btnNewButton_12.setBounds(334, 52, 88, 25);
 		btnNewButton_12.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -318,8 +318,8 @@ public class MainGUI {
 			}
 		});
 		
-		JButton btnNewButton_13 = new JButton("Clear");
-		btnNewButton_13.setBounds(347, 103, 65, 25);
+		JButton btnNewButton_13 = new JButton("Clear");//clear
+		btnNewButton_13.setBounds(334, 81, 88, 25);
 		btnNewButton_13.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -335,7 +335,7 @@ public class MainGUI {
 				}
 				FileOutputStream cleartext = null;
 				try {
-					cleartext = new FileOutputStream("./result.txt");
+					cleartext = new FileOutputStream("./result.csv");
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -350,9 +350,10 @@ public class MainGUI {
 			}
 		});
 		
+		
 		//************************************************************************************************************
-				JButton btnNewButton = new JButton("=");
-				btnNewButton.setBounds(347, 134, 65, 25);
+				JButton btnNewButton = new JButton("analyze");//éÆÇÃâêÕ
+				btnNewButton.setBounds(334, 110, 88, 25);
 				btnNewButton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
@@ -361,7 +362,21 @@ public class MainGUI {
 						
 						String[] sa=s.split("\\+");
 						int i;
-						if(v=="4")
+						int ai;
+						int at=0;
+						for(ai=0;ai<s.length()-1;ai++)
+						{
+							if(s.substring(ai,ai+2).equals("12")||s.substring(ai,ai+2).equals("34")||s.substring(ai,ai+2).equals("56")||s.substring(ai,ai+2).equals("78")||s.substring(ai,ai+2).equals("90"))
+							{
+								at++;
+							}
+						}
+						/////////////////
+						if(at>0)
+						{
+							JOptionPane.showMessageDialog(null,"error : repeat!!!",null,1);
+						}
+						else if(v=="4")
 						{
 							for(i=0;i<sa.length;i++)
 							{
@@ -384,7 +399,7 @@ public class MainGUI {
 							}
 							FileOutputStream fos=null;
 							try {
-								fos = new FileOutputStream("./result.txt",true);
+								fos = new FileOutputStream("./result.csv",true);
 							} catch (FileNotFoundException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -447,7 +462,7 @@ public class MainGUI {
 							}
 							FileOutputStream fos=null;
 							try {
-								fos = new FileOutputStream("./result.txt",true);
+								fos = new FileOutputStream("./result.csv",true);
 							} catch (FileNotFoundException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -487,8 +502,20 @@ public class MainGUI {
 							JOptionPane.showMessageDialog(null,"Please select the variable !!!",null,1);
 							textField.setText(textField.getText().substring(0,textField.getText().length()-1));
 						}
+						
+						
+						//////////////
 					}
 				});
+				JButton btnNewButton_14 = new JButton("table");//ê^óùï\
+				btnNewButton_14.setBounds(334, 139, 88, 25);
+				
+				
+				JButton btnNewButton_15 = new JButton("karnaugh");//ÉJÉãÉmÅ[ê}
+				btnNewButton_15.setBounds(334, 168, 88, 25);
+				
+				
+				
 		panel.setLayout(null);
 		panel.add(label);
 		panel.add(comboBox);
@@ -506,6 +533,12 @@ public class MainGUI {
 		panel.add(btnNewButton_12);
 		panel.add(btnNewButton_11);
 		panel.add(btnNewButton_13);
+		panel.add(btnNewButton_14);
+		panel.add(btnNewButton_15);
 		panel.add(btnNewButton);
+		
+		
+		
+		
 	}
 }

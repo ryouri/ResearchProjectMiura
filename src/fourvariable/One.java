@@ -49,7 +49,7 @@ public class One {
 				for(j=0;j<2;j++)
 					for(k=0;k<2;k++)
 					{
-						sai=i+","+j+","+a%2+","+k+",";
+						sai=i+","+j+","+k+","+a%2+",";
 						SetF setf=new SetF(f,sai);
 					}
 		}//D
