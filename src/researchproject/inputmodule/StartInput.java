@@ -14,7 +14,7 @@ public class StartInput {
 	private JPanel logicalPanel;
 
 	private RadioInputer radioInputer;
-	private MainGUI logicalInputer;
+	private LogicalInputer logicalInputer;
 	
 	public JFrame getFrame() {
 		return frame;
@@ -46,7 +46,7 @@ public class StartInput {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					logicalInputer = new MainGUI(frame, thisObject);
+					logicalInputer = new LogicalInputer(frame, thisObject);
 					logicalPanel = logicalInputer.getPanel();
 				} catch (Exception e) {
 					e.printStackTrace();

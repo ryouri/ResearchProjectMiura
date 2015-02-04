@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import researchproject.drawmodule.DrawManager;
 import researchproject.inputmodule.logical.fivevar.FFive;
 import researchproject.inputmodule.logical.fivevar.FFour;
 import researchproject.inputmodule.logical.fivevar.OOne;
@@ -28,7 +29,7 @@ import researchproject.inputmodule.logical.fourvar.One;
 import researchproject.inputmodule.logical.fourvar.Three;
 import researchproject.inputmodule.logical.fourvar.Two;
 
-public class MainGUI {
+public class LogicalInputer {
 	JPanel panel;
 	public JPanel getPanel() {
 		return panel;
@@ -66,7 +67,7 @@ public class MainGUI {
 	/**
 	 * Create the application.
 	 */
-	public MainGUI(JFrame frame, StartInput startInput) throws IOException{
+	public LogicalInputer(JFrame frame, StartInput startInput) throws IOException{
 		this.frame = frame;
 		this.startInput = startInput;
 		initialize();
@@ -434,8 +435,10 @@ public class MainGUI {
 								e1.printStackTrace();
 							}
 							
-							
-							
+
+					        //三澤 20150205
+					        //描画プログラムの実行
+					        new DrawManager("./result.csv");
 						}
 						else if(v=="5")
 						{
