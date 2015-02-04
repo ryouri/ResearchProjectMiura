@@ -1,7 +1,6 @@
 package researchproject.inputmodule;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -30,30 +29,46 @@ import researchproject.inputmodule.logical.fourvar.Three;
 import researchproject.inputmodule.logical.fourvar.Two;
 
 public class MainGUI {
+	JPanel panel;
+	public JPanel getPanel() {
+		return panel;
+	}
 
 	private JFrame frame;
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
 	private JTextField textField;
+	
+	private StartInput startInput;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainGUI window = new MainGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					MainGUI window = new MainGUI();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 	}
 
 	/**
 	 * Create the application.
 	 */
-	public MainGUI() throws IOException{
+	public MainGUI(JFrame frame, StartInput startInput) throws IOException{
+		this.frame = frame;
+		this.startInput = startInput;
 		initialize();
 		
 		FileOutputStream cleartext = null;
@@ -104,24 +119,21 @@ public class MainGUI {
 	
 	int ir,jr;
 	
-	
-	private void initialize() throws IOException{
-		frame = new JFrame();
-		frame.setBounds(450, 200, 450, 300);
+	public void setPanelToFrame() {
+		frame.setBounds(0, 0, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		
+	}
+	
+	private void initialize() throws IOException{
+		panel = new JPanel();
 		
 		textField = new JTextField();
 		textField.setEditable(false);
 		textField.setBounds(30, 44, 228, 19);
 		textField.setColumns(10);
-		
-		
-		
-		
 		
 		JButton btnNewButton_1 = new JButton("A");
 		btnNewButton_1.setBounds(30, 93, 50, 25);
@@ -499,6 +511,12 @@ public class MainGUI {
 				});
 				JButton btnNewButton_14 = new JButton("table");//�^���\
 				btnNewButton_14.setBounds(334, 139, 88, 25);
+				btnNewButton_14.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						startInput.changeRadio();
+					}
+				});
 				
 				
 				JButton btnNewButton_15 = new JButton("karnaugh");//�J���m�[�}

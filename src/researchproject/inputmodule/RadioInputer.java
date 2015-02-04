@@ -6,6 +6,11 @@ import processing.core.PFont;
 import researchproject.drawmodule.DrawManager;
 
 public class RadioInputer extends PApplet {
+	
+	StartInput startInput;
+	public void setStartInput(StartInput startInput) {
+		this.startInput = startInput;
+	}
 
 
 
@@ -686,6 +691,10 @@ public void draw()
 
 /////////////////////////////////////////////////////// 
 public void mouseClicked(){
+	//formulaが押された時
+	if (mouseX >= 80 && mouseX <= 180 && mouseY >= 30 && mouseY <= 67) {
+		startInput.changeLogical();
+	}
 
   switch(stat){
     case 2:
