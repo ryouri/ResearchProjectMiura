@@ -1,4 +1,4 @@
-package fivevariable;
+package researchproject.inputmodule.logical.fivevar;
 
 public class SetG {
 	public SetG(String[] g,String sai)

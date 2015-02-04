@@ -1,4 +1,4 @@
-package fourvariable;
+package researchproject.inputmodule.logical.fourvar;
 
 public class SetF {
 	public SetF(String[] f,String sai)

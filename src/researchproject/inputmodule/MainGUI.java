@@ -1,4 +1,4 @@
-package InputGUI;
+package researchproject.inputmodule;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -19,15 +19,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import fivevariable.FFive;
-import fivevariable.FFour;
-import fivevariable.OOne;
-import fivevariable.TThree;
-import fivevariable.TTwo;
-import fourvariable.Four;
-import fourvariable.One;
-import fourvariable.Three;
-import fourvariable.Two;
+import researchproject.inputmodule.logical.fivevar.FFive;
+import researchproject.inputmodule.logical.fivevar.FFour;
+import researchproject.inputmodule.logical.fivevar.OOne;
+import researchproject.inputmodule.logical.fivevar.TThree;
+import researchproject.inputmodule.logical.fivevar.TTwo;
+import researchproject.inputmodule.logical.fourvar.Four;
+import researchproject.inputmodule.logical.fourvar.One;
+import researchproject.inputmodule.logical.fourvar.Three;
+import researchproject.inputmodule.logical.fourvar.Two;
 
 public class MainGUI {
 

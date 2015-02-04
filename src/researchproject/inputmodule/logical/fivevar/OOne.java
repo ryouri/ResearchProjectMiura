@@ -1,4 +1,4 @@
-package fivevariable;
+package researchproject.inputmodule.logical.fivevar;
 
 public class OOne {
 	public OOne(String[] g,String sai)

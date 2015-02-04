@@ -1,4 +1,4 @@
-package fivevariable;
+package researchproject.inputmodule.logical.fivevar;
 
 import java.util.Arrays;
 

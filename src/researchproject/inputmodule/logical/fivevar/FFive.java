@@ -1,8 +1,8 @@
-package fivevariable;
+package researchproject.inputmodule.logical.fivevar;
 
 import java.util.Arrays;
 
-import fourvariable.SetF;
+import researchproject.inputmodule.logical.fourvar.SetF;
 
 public class FFive {
 	public FFive(String[] g,String sai)

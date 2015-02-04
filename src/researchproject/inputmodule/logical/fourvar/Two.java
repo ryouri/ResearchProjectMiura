@@ -1,4 +1,4 @@
-package fourvariable;
+package researchproject.inputmodule.logical.fourvar;
 
 import java.util.Arrays;
 
