@@ -22,6 +22,8 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		//background(0,0,0);//黒
 		background(255,255,255);//白
 		smooth();
+
+
 		//frameRate(30);//フレームレート
 	}
 
@@ -62,6 +64,7 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 	//------
 
 		boolean proccessDrawFlag;
+
 		Loop proccessPlace;
 		int proccessX;
     	int proccessY;
@@ -73,44 +76,54 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 			TimerTask task = new TimerTask() {
 
 		        public void run() {
+		        	boolean translateFlag = false;//座標変換の管理用
 		        	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
 
 		           if(!proccessLoopArrayFlag){
+		        	    proccessDrawFlag = true;
       					int x = 10;
       					int y = 40;
       					int z = -60;
 
-		        	//proccessLoopArrayの0番目の要素を読み込む
-		       		synchronized (loopManager.getProccessLoopArray()) {
-		       			proccessPlace = proccessLoopArray.get(0);
-		       			for (LoopUnit loopUnit : proccessPlace.getLoopUnitArray()) {
-		       				proccessY = loopUnit.getY();
-		       				proccessX = loopUnit.getX();
-		       				proccessZ = loopUnit.getZ();
 
-		    	       		//計算中ループの描画
-		       			//	if(proccessZ == 0){
-		       			//		CaluculatingLoopDraw(proccessY,proccessX);
-		       			//	}else{
-		       				//座標軸の移動
-		       			//		translate(x,y,z);
-		       			//		CaluculatingLoopDraw(proccessY,proccessX);
-		       			//	}
+			        	//proccessLoopArrayの0番目の要素を読み込む
+//			       		synchronized (loopManager.getProccessLoopArray()) {
+//			       			proccessPlace = proccessLoopArray.get(0);
+//			       			for (LoopUnit loopUnit : proccessPlace.getLoopUnitArray()) {
+//			       				proccessY = loopUnit.getY();
+//			       				proccessX = loopUnit.getX();
+//			       				proccessZ = loopUnit.getZ();
+//
+//			       				//デバッグ用
+//			       				System.out.println("X = "+proccessX+", Y = "+proccessY+", Z = "+proccessZ);
+//
+//
+//			    	       		//計算中ループの描画
+//			       				if( proccessZ == 0 ){
+//			       					//座標軸の移動
+//			       					//translate(-x,-y,-z);
+//			       					//translateFlag = true;
+//			       					CaluculatingLoopDraw(proccessY,proccessX);
+//			       				}else{
+//
+//			       					CaluculatingLoopDraw(proccessY,proccessX);
+//			       				}
+//
+//
+//			       			}
+//			       		}
+//			       		System.out.println("------------------------------------");
+//
+//			       		//proccessDrawFlag = true;
+//
+//			       		//先頭をremove
+//			       		proccessLoopArray.remove(0);
+//
+//			       		//座標移動がされていた場合は戻す
+//			       		if( translateFlag ){
+//			       			translate(x,y,z);
+//			       		}
 
-		    	       //		System.out.println("X = "+proccessX+",Y = "+proccessY);
-
-		       			}
-		       		}
-		       		//System.out.println("------------------------------------");
-
-		       		proccessDrawFlag = true;
-
-		       		//先頭をremove
-		       		proccessLoopArray.remove(0);
-
-		       		//translate(-x,-y,-z);//座標を戻す
-
-		        	  // proccessDrawFlag = true;
 		           }else{
 		        	 //  proccessDrawFlag = false;
 		           }
@@ -118,7 +131,7 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		        }
 		    };
 
-		    timer.schedule(task, 2000L, 500L);
+		    timer.schedule(task, 2000L, 400L);
 
 		}
 	//------
@@ -128,7 +141,6 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		//座標軸の中心を移動
 		translate(width/3,height/4);
 		scale(1.5f);
-
 		rotateX(radians(50));    //X軸に対して50度回転
 		rotateZ(radians(20));
 
@@ -142,7 +154,10 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		}
 
 		//マスに色を塗る
-		draw2(0,0);
+		//draw2(0,0);
+
+		//座標軸の保存
+		//pushMatrix();
 
 
 		/* 2つめの表を描く */
@@ -187,14 +202,63 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		}
 
 
+
+
 		//マスに色を塗る
-		draw2(0,1);
+		//draw2(0,1);
 
 		//計算中のループの描画
+//		if(proccessDrawFlag){
+//			//CaluculatingLoopDraw(proccessY,proccessX);
+//				if( proccessZ == 0 ){
+//   					//座標軸の移動
+//   					//translate(-x,-y,-z);
+//   					//translateFlag = true;
+//   					CaluculatingLoopDraw(proccessY,proccessX);
+//   				}else{
+//
+//   					CaluculatingLoopDraw(proccessY,proccessX);
+//   				}
+//
+//			proccessDrawFlag = false;
+//		}
+
+
+		//計算中のループの描画，別バージョン
 		if(proccessDrawFlag){
-			CaluculatingLoopDraw(proccessY,proccessX);
-			proccessDrawFlag = false;
+	   		synchronized (loopManager.getProccessLoopArray()) {
+	   			proccessPlace = proccessLoopArray.get(0);
+	   			for (LoopUnit loopUnit : proccessPlace.getLoopUnitArray()) {
+	   				proccessY = loopUnit.getY();
+	   				proccessX = loopUnit.getX();
+	   				proccessZ = loopUnit.getZ();
+
+	   				//デバッグ用
+	   				System.out.println("X = "+proccessX+", Y = "+proccessY+", Z = "+proccessZ);
+
+
+		       		//計算中ループの描画
+	   				if( proccessZ == 0 ){
+	   					//座標軸の移動
+	   					//translate(-x,-y,-z);
+	   					//translateFlag = true;
+	   					CaluculatingLoopDraw(proccessY,proccessX);
+	   				}else{
+
+	   					CaluculatingLoopDraw(proccessY,proccessX);
+	   				}
+
+	   			}
+	   		}
+	   		System.out.println("------------------------------------");
+
+	   		//proccessDrawFlag = true;
+
+	   		//先頭をremove
+	   		proccessLoopArray.remove(0);
+	   		proccessDrawFlag = false;
 		}
+
 
 
 		//軸線
@@ -214,8 +278,13 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		dotLine(-x,-y,4,0,-z);
 		dotLine(-x,-y,4,4,-z);
 
+		//座標軸を戻す
+		//popMatrix();
+
 		//白にフェードアウト
 		fadeToWhite();
+		//fadeToWhite_box();
+		//fadeToWhiteTop(x,y,z);
 
 	}
 
@@ -253,12 +322,30 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 			rect(massW * j, massH * i, massW, massH);
 
 		}
-	//白にフェード
+	//白にフェード(表下)
 	public void fadeToWhite() {
 		noStroke();
 		fill(255, 20);//fill(color,alpha)
 		rectMode(CORNER);
 		rect(0, 0, width, height);
+	}
+
+	//白にフェード(表上)
+	public void fadeToWhiteTop(int x,int y,int z) {
+		noStroke();
+		fill(255, 20);//fill(color,alpha)
+		rectMode(CORNER);
+		rect(-x, -y,-z, width, height);
+	}
+
+	public void fadeToWhite_box(){
+		int x = (width/3)+10;
+		int y = (height/4)+40;
+		int z = -60;
+		translate(-x,-y,-z);
+		fill(255,20);
+		box(500);
+		translate(x,y,z);
 	}
 
 
