@@ -183,53 +183,50 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 			}
 		}
 
-		//表0(上)に１を埋める
-		int count = 0;
-		for(int k = 0; k<shinri.length; k++){
-			if( shinri[k][4] == 0){
-				for(int l = 0; l<shinri[k].length-1; l++){
-					if(shinri[k][l]==1){
-						drawText0(count,l,x,y,z);
-					}
+		//表(上)に１を埋める．massArray[1]
+		for(int k = 0; k<massArray[1].length; k++){
+			for(int l = 0; l<massArray[1][k].length; l++){
+				if( massArray[1][k][l].getState() == Mass.STATE_ONE ){
+					drawText0(k,l,x,y,z);
 				}
-				count++;
 			}
 		}
 
-		//表1(下)に１を埋める
-		count = 0;
-		for(int k = 0; k<shinri.length; k++){
-			if( shinri[k][4] == 1){
-				for(int l = 0; l<shinri[k].length-1; l++){
-					if(shinri[k][l]==1){
-						drawText1(count,l);
-					}
+		//表(下)に１を埋める．massArray[0]
+		for(int k = 0; k<massArray[0].length; k++){
+			for(int l = 0; l<massArray[0][k].length; l++){
+				if( massArray[0][k][l].getState() == Mass.STATE_ONE ){
+					drawText1(k,l);
 				}
-				count++;
 			}
 		}
 
-
-
-
-		//マスに色を塗る
-		//draw2(0,1);
-
-		//計算中のループの描画
-//		if(proccessDrawFlag){
-//			//CaluculatingLoopDraw(proccessY,proccessX);
-//				if( proccessZ == 0 ){
-//   					//座標軸の移動
-//   					//translate(-x,-y,-z);
-//   					//translateFlag = true;
-//   					CaluculatingLoopDraw(proccessY,proccessX);
-//   				}else{
-//
-//   					CaluculatingLoopDraw(proccessY,proccessX);
-//   				}
-//
-//			proccessDrawFlag = false;
+//		//表0(上)に１を埋める
+//		int count = 0;
+//		for(int k = 0; k<shinri.length; k++){
+//			if( shinri[k][4] == 0){
+//				for(int l = 0; l<shinri[k].length-1; l++){
+//					if(shinri[k][l]==1){
+//						drawText0(count,l,x,y,z);
+//					}
+//				}
+//				count++;
+//			}
 //		}
+//
+//		//表1(下)に１を埋める
+//		count = 0;
+//		for(int k = 0; k<shinri.length; k++){
+//			if( shinri[k][4] == 1){
+//				for(int l = 0; l<shinri[k].length-1; l++){
+//					if(shinri[k][l]==1){
+//						drawText1(count,l);
+//					}
+//				}
+//				count++;
+//			}
+//		}
+
 
 
 		//計算中のループの描画，別バージョン
@@ -247,13 +244,15 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 		       		//計算中ループの描画
 	   				if( processZ == 0 ){
-	   					//座標軸の移動
-	   					//translate(-x,-y,-z);
 	   					//translateFlag = true;
+	   					translate(-x,-y,-z);
 	   					CaluculatingLoopDraw(processY,processX);
+	   					translate(x,y,z);
 	   				}else{
-
+	   					//座標軸の移動
+	   					translate(-x,-y,-z);
 	   					CaluculatingLoopDraw(processY,processX);
+	   					translate(x,y,z);
 	   				}
 
 	   			}
@@ -292,7 +291,7 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		//白にフェードアウト
 		fadeToWhite();
 		//fadeToWhite_box();
-		//fadeToWhiteTop(x,y,z);
+		fadeToWhiteTop(x,y,z);
 
 	}
 
@@ -341,9 +340,20 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 	//白にフェード(表上)
 	public void fadeToWhiteTop(int x,int y,int z) {
 		noStroke();
-		fill(255, 20);//fill(color,alpha)
+		translate(-x,-y,-z);
+		fill(255,20);//fill(color,alpha)
 		rectMode(CORNER);
-		rect(-x, -y,-z, width, height);
+		//rect(-x, -y,-z, width, height);
+		rect(0, 0, massW * 4, massH * 4);
+		translate(x,y,z);
+	}
+
+	//紅梅色に着色サンプル(表上)
+	public void fadeToColor() {
+		noStroke();
+		fill(235,121,136, 20);//fill(color,alpha)
+		rectMode(CORNER);
+		rect(0, 0, width, height);
 	}
 
 	public void fadeToWhite_box(){

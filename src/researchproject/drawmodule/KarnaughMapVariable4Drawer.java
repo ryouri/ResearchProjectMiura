@@ -62,6 +62,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 //------
 
 	boolean processDrawFlag;
+	boolean finishAnimationFlag;
 	//boolean translageFlag;//座標変換の管理用
 	Loop processPlace;
 
@@ -109,6 +110,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 				//Loop生成の終了チェック用の処理を追加
 				//nullじゃなければfieldの変数に参照を代入
 				} else if (loopManager.getResultLoop2Array() != null){
+
 					synchronized (loopManager.getResultLoop2Array()) {
 						resultStringArray = loopManager.getResultStringArray();
 
@@ -169,6 +171,20 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 
 	    timer.schedule(task, 2000L, 200L);
 
+//		//ループ決定時のアニメーション用タイマ
+//	    if(loopManager.getResultLoop2Array() != null){
+//			TimerTask animeTask = new TimerTask() {
+//		        public void run() {
+//		            finishAnimationFlag = false;
+//
+//		        }
+//		    };
+//		    Timer animeTimer = new Timer();
+//		    finishAnimationFlag = true;
+//		    animeTimer.schedule(animeTask,14600L ,1500L);
+//	    }
+
+
 	}
 //------
 	final int massW = 36;
@@ -213,6 +229,10 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		//TODO: Synchoronized構文を入れるとバグるよ，気をつけて
 		if (resultStringArray != null){
 			text(resultStringArray.get(nowProcessResultIndex), -50, 150);
+		}
+
+		if(finishAnimationFlag){
+			kirakira();
 		}
 
 		//白にフェードアウト
@@ -284,5 +304,46 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		rectMode(CORNER);
 		rect(0, 0, width, height);
 	}
+
+	//キラキラ部分
+		public void kirakira(){
+			//translate(-100,-100);
+			noStroke();
+			fill(135,206,250);//lightSkyblue
+			beginShape();//図形描画スタート
+			vertex( 50, 50 );
+			bezierVertex( 50,75,50,75,38,75);
+			bezierVertex( 50,75,50,75,50,100 );
+			bezierVertex( 50,75,50,75,62,75);
+			bezierVertex( 50,75,50,75,50,50);
+			endShape();//終わり
+
+			//色
+			float colorB = random( 80,255 );
+			float colorR = random( 80,255 );
+			float colorG = random( 80,255 );
+		    fill( colorR, colorG, colorB );
+					//fill(135,206,265);
+					int x0 = floor(random(massW*4));
+					int y0 = floor(random(massH*4));
+					int halfX = floor(random(12,30));
+					int halfY = halfX * 2;
+					int sX = x0;
+					int sY = y0+halfY;
+					int x1 = x0-halfX;
+					int y1 = y0+halfY;
+					int x2 = x0;
+					int y2 = y0+halfY*2;
+					int x3 = x0+halfX;
+					int y3 = y0+halfY;
+
+					beginShape();
+					vertex(x0,y0);
+					bezierVertex( sX,sY,sX,sY,x1,y1);
+					bezierVertex( sX,sY,sX,sY,x2,y2);
+					bezierVertex( sX,sY,sX,sY,x3,y3);
+					bezierVertex( sX,sY,sX,sY,x0,y0);
+					endShape();
+		}
 
 }
