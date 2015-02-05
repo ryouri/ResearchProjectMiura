@@ -46,29 +46,37 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 	/**
 	 * 処理してもらいたいループが格納される
 	 */
-	private ArrayList<Loop> proccessLoopArray;
+	private ArrayList<Loop> processLoopArray;
 
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
-		this.massArray = massManager.getMassArray();
+
+		//TODO: ダミーデータの生成
+		this.massArray = new Mass[2][4][4];
+		//massArray[0]が下の表を表現
+		massArray[0] = massManager.getMassArray()[0];
+		//massArray[1]が上の表を表現
+		massArray[1] = massManager.getMassArray()[0];
 	}
+
+
 	public void setCalcurateManager(CalcurateManager calcurateManager) {
 		this.calcurateManager = calcurateManager;
 		this.loopManager = calcurateManager.getLoopManager();
 		//proccessLoopArrayにアクセスするときは，下のようにsynchronized構文を使って
-		synchronized (loopManager.getProccessLoopArray()) {
-			this.proccessLoopArray = loopManager.getProccessLoopArray();
+		synchronized (loopManager.getProcessLoopArray()) {
+			this.processLoopArray = loopManager.getProcessLoopArray();
 		}
 	}
 
 	//------
 
-		boolean proccessDrawFlag;
+		boolean processDrawFlag;
 
-		Loop proccessPlace;
-		int proccessX;
-    	int proccessY;
-    	int proccessZ;
+		Loop processPlace;
+		int processX;
+    	int processY;
+    	int processZ;
 
 		public void start() {
 			super.start();
@@ -77,10 +85,10 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 		        public void run() {
 		        	boolean translateFlag = false;//座標変換の管理用
-		        	boolean proccessLoopArrayFlag = proccessLoopArray.isEmpty();
+		        	boolean proccessLoopArrayFlag = processLoopArray.isEmpty();
 
 		           if(!proccessLoopArrayFlag){
-		        	    proccessDrawFlag = true;
+		        	    processDrawFlag = true;
       					int x = 10;
       					int y = 40;
       					int z = -60;
@@ -225,27 +233,27 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 
 		//計算中のループの描画，別バージョン
-		if(proccessDrawFlag){
-	   		synchronized (loopManager.getProccessLoopArray()) {
-	   			proccessPlace = proccessLoopArray.get(0);
-	   			for (LoopUnit loopUnit : proccessPlace.getLoopUnitArray()) {
-	   				proccessY = loopUnit.getY();
-	   				proccessX = loopUnit.getX();
-	   				proccessZ = loopUnit.getZ();
+		if(processDrawFlag){
+	   		synchronized (loopManager.getProcessLoopArray()) {
+	   			processPlace = processLoopArray.get(0);
+	   			for (LoopUnit loopUnit : processPlace.getLoopUnitArray()) {
+	   				processY = loopUnit.getY();
+	   				processX = loopUnit.getX();
+	   				processZ = loopUnit.getZ();
 
 	   				//デバッグ用
-	   				System.out.println("X = "+proccessX+", Y = "+proccessY+", Z = "+proccessZ);
+	   				System.out.println("X = "+processX+", Y = "+processY+", Z = "+processZ);
 
 
 		       		//計算中ループの描画
-	   				if( proccessZ == 0 ){
+	   				if( processZ == 0 ){
 	   					//座標軸の移動
 	   					//translate(-x,-y,-z);
 	   					//translateFlag = true;
-	   					CaluculatingLoopDraw(proccessY,proccessX);
+	   					CaluculatingLoopDraw(processY,processX);
 	   				}else{
 
-	   					CaluculatingLoopDraw(proccessY,proccessX);
+	   					CaluculatingLoopDraw(processY,processX);
 	   				}
 
 	   			}
@@ -255,8 +263,8 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 	   		//proccessDrawFlag = true;
 
 	   		//先頭をremove
-	   		proccessLoopArray.remove(0);
-	   		proccessDrawFlag = false;
+	   		processLoopArray.remove(0);
+	   		processDrawFlag = false;
 		}
 
 

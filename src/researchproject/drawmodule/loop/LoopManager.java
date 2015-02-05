@@ -33,7 +33,7 @@ public class LoopManager{
 	/**
 	 * 処理してもらいたいループが格納される
 	 */
-	private ArrayList<Loop> proccessLoopArray;
+	private ArrayList<Loop> processLoopArray;
 
 	/**
 	 * 最終的に結果として出力するループが格納される
@@ -66,8 +66,8 @@ public class LoopManager{
 		return allLoopArray;
 	}
 
-	public ArrayList<Loop> getProccessLoopArray() {
-		return proccessLoopArray;
+	public ArrayList<Loop> getProcessLoopArray() {
+		return processLoopArray;
 	}
 
 	public LoopManager(int varNum, MassManager massManager) {
@@ -79,7 +79,7 @@ public class LoopManager{
 	public void init() {
 		successLoopArray = new ArrayList<Loop>();
 		allLoopArray = new ArrayList<Loop>();
-		proccessLoopArray = new ArrayList<Loop>();
+		processLoopArray = new ArrayList<Loop>();
 	}
 
 	LoopGenerator loopGenerator;
@@ -154,16 +154,16 @@ public class LoopManager{
 			}
 			logicalEquation += " + ";
 		}
-		
+
 		logicalEquation = logicalEquation.substring(0, logicalEquation.lastIndexOf(" + "));
 		logicalEquation = logicalEquation.replace(" ", "");
-		
+
 		System.out.println(logicalEquation);
-		
+
 		resultStringArray = new ArrayList<String>();
 		resultStringArray.add(logicalEquation);
 		resultStringArray.add(logicalEquation);
-		
+
 		//デバッグ用の処理
 		//resultLoop2Arrayにテスト用のArrayを追加
 		resultLoop2Array = new ArrayList<ArrayList<Loop>>();

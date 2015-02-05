@@ -42,7 +42,7 @@ public abstract class LoopGenerator {
 			this.successLoopArray = loopManager.getSuccessLoopArray();
 		}
 		this.allLoopArray = loopManager.getAllLoopArray();
-		this.proccessLoopArray = loopManager.getProccessLoopArray();
+		this.proccessLoopArray = loopManager.getProcessLoopArray();
 	}
 
 	abstract public void generateLoop();
