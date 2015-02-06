@@ -89,6 +89,9 @@ public class KarnaughMapVariable5Drawer extends PApplet{
     	int nowProcessResultLoopIndex=0;
     	ArrayList<Loop> nowProcessResultArray;
 
+    	long beforeProcessTime;
+    	static final long INTERVAL = 1000;
+
 		public void start() {
 			super.start();
 
@@ -103,6 +106,8 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		        public void run() {
 		        	boolean translateFlag = false;//座標変換の管理用
 		        	boolean proccessLoopArrayFlag = processLoopArray.isEmpty();
+
+		        	long nowTime = System.currentTimeMillis();
 
 		           if(!proccessLoopArrayFlag){
 		        	    processDrawFlag = true;
@@ -150,8 +155,11 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 //			       		}
 
 		           } else if (loopManager.getResultLoop2Array() != null
-		        		   && loopManager.getResultLoop2Array().size() != 0){
-		        	    resultDrawFlag = true;
+		        		   && loopManager.getResultLoop2Array().size() != 0
+		        		   && nowTime - beforeProcessTime >= INTERVAL){
+		        	   beforeProcessTime = System.currentTimeMillis();
+		        	   resultDrawFlag = true;
+
 
 //						synchronized (loopManager.getResultLoop2Array()) {
 //							resultStringArray = loopManager.getResultStringArray();
@@ -414,6 +422,8 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 				// ある結果の処理すべきLoopが残っている
 				nowProcessResultLoopIndex++;
 //				try {
+//					fadeToWhite();
+//					fadeToWhiteTop(x,y,z);
 //					Thread.sleep(500);
 //				} catch (InterruptedException e) {
 //					e.printStackTrace();
@@ -422,6 +432,8 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 				nowProcessResultLoopIndex = 0;
 				// ある結果のLoopは全て描画し終えた
 //				try {
+//					fadeToWhite();
+//					fadeToWhiteTop(x,y,z);
 //					Thread.sleep(2000);
 //				} catch (InterruptedException e) {
 //					e.printStackTrace();
@@ -518,7 +530,7 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 	//決定ループ描画
 	public void resultLoopDraw(int i, int j){
-		fill(235,121,136,75);
+		fill(235,121,136, 80);
 		rect(massW * j, massH * i, massW, massH);
 	}
 
