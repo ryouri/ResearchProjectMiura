@@ -48,15 +48,17 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 	 */
 	private ArrayList<Loop> processLoopArray;
 
+	/**
+	 * 最終的に結果として出力するループが格納される
+	 */
+	private ArrayList<ArrayList<Loop>> resultLoop2Array;
+	private ArrayList<String> resultStringArray;
+
 	public void setMassManager(MassManager massManager) {
 		this.massManager = massManager;
 
 		//TODO: ダミーデータの生成
-		this.massArray = new Mass[2][4][4];
-		//massArray[0]が下の表を表現
-		massArray[0] = massManager.getMassArray()[0];
-		//massArray[1]が上の表を表現
-		massArray[1] = massManager.getMassArray()[0];
+		this.massArray = massManager.getMassArray();
 	}
 
 
@@ -71,17 +73,32 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 	//------
 
-		boolean processDrawFlag;
+		boolean processDrawFlag;//計算過程描画用フラグ
+		boolean resultDrawFlag;//ループ結果描画用フラグ
 
 		Loop processPlace;
 		int processX;
     	int processY;
     	int processZ;
 
+		int resultX;
+		int resultY;
+		int resultZ;
+
+    	int nowProcessResultIndex=0;
+    	int nowProcessResultLoopIndex=0;
+    	ArrayList<Loop> nowProcessResultArray;
+
 		public void start() {
 			super.start();
+
+
+
 			Timer timer = new Timer();
 			TimerTask task = new TimerTask() {
+
+
+
 
 		        public void run() {
 		        	boolean translateFlag = false;//座標変換の管理用
@@ -132,14 +149,94 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 //			       			translate(x,y,z);
 //			       		}
 
-		           }else{
+		           } else if (loopManager.getResultLoop2Array() != null
+		        		   && loopManager.getResultLoop2Array().size() != 0){
+		        	    resultDrawFlag = true;
+
+//						synchronized (loopManager.getResultLoop2Array()) {
+//							resultStringArray = loopManager.getResultStringArray();
+//
+//							resultLoop2Array = loopManager.getResultLoop2Array();
+//
+//							//インデックスが指す，ある結果を表示する
+//							nowProcessResultArray = resultLoop2Array.get(nowProcessResultIndex);
+//							//System.out.println("----"+nowprocessResultIndex+"----");//デバッグ用
+//							//System.out.println("nowprocessResultArray.size() = "+nowprocessResultArray.size());
+//
+//							//結果の文字列を表示する
+//
+//
+//							//ある結果のあるLoopを処理する
+//							Loop nowProcessLoop = nowProcessResultArray.get(nowProcessResultLoopIndex);
+//
+//							//LoopUnitを取り出して各マスを描画
+//							for (LoopUnit resultLoop : nowProcessLoop.getLoopUnitArray()) {
+//								resultX = resultLoop.getX();
+//								resultY = resultLoop.getY();
+//								resultZ = resultLoop.getZ();
+//
+//								// 決定ループの描画(Z=0:下，Z=1:上)
+//								int x = 10;
+//								int y = 40;
+//								int z = -60;
+//								if( resultZ == 0){
+//									resultLoopDraw(resultY, resultX);
+//								}else{
+//									translate(-x,-y,-z);
+//									resultLoopDraw(resultY, resultX);
+//									translate(x,y,z);
+//								}
+//
+//								//System.out.println("x = "+resultX+" ,y = "+resultY);
+//							}
+//
+//
+//							// LoopArrayのサイズを保存
+//							int processLoopArraySize = nowProcessResultArray.size() - 1;
+//							if (nowProcessResultLoopIndex < processLoopArraySize) {
+//								// ある結果の処理すべきLoopが残っている
+//								nowProcessResultLoopIndex++;
+//								try {
+//									Thread.sleep(300);
+//								} catch (InterruptedException e) {
+//									e.printStackTrace();
+//								}
+//							} else {
+//								nowProcessResultLoopIndex = 0;
+//								// ある結果のLoopは全て描画し終えた
+//								try {
+//									Thread.sleep(1000);
+//								} catch (InterruptedException e) {
+//									e.printStackTrace();
+//								}
+//
+//								int resultArraySize = resultLoop2Array.size() - 1;
+//								if (nowProcessResultIndex < resultArraySize) {
+//									nowProcessResultIndex++;
+//								} else {
+//									nowProcessResultIndex = 0;
+//								}
+//							}
+//						}
+					}
 		        	 //  proccessDrawFlag = false;
-		           }
+
 
 		        }
 		    };
 
-		    timer.schedule(task, 2000L, 200L);
+			//Timer timerResult = new Timer();
+			TimerTask taskResult = new TimerTask() {
+		        public void run() {
+		        	if (loopManager.getResultLoop2Array() != null){
+			        	   resultDrawFlag = true;
+					}
+		        }
+			};
+			//timerResult.schedule(taskResult, 2000L, 750L);
+
+		    timer.schedule(task, 2000L, 150L);
+//		    timer.schedule(taskResult, 2000L, 50L);
 
 		}
 	//------
@@ -244,15 +341,23 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 		       		//計算中ループの描画
 	   				if( processZ == 0 ){
-	   					//translateFlag = true;
-	   					translate(-x,-y,-z);
-	   					CaluculatingLoopDraw(processY,processX);
-	   					translate(x,y,z);
+	   					//translate(-x,-y,-z);
+						if (processPlace.isLoopSuccess()) {
+							CaluculatingSuccessLoopDraw(processY, processX);
+						} else {
+							CaluculatingLoopDraw(processY, processX);
+						}
+	   					//translate(x,y,z);
 	   				}else{
 	   					//座標軸の移動
-	   					//translate(-x,-y,-z);
-	   					CaluculatingLoopDraw(processY,processX);
-	   					//translate(x,y,z);
+	   					translate(-x,-y,-z);
+
+						if (processPlace.isLoopSuccess()) {
+							CaluculatingSuccessLoopDraw(processY, processX);
+						} else {
+							CaluculatingLoopDraw(processY, processX);
+						}
+	   					translate(x,y,z);
 	   				}
 
 	   			}
@@ -264,6 +369,73 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 	   		//先頭をremove
 	   		processLoopArray.remove(0);
 	   		processDrawFlag = false;
+		}
+
+		//ループ結果の表示
+		if(resultDrawFlag){
+			synchronized (loopManager.getResultLoop2Array()) {
+				resultStringArray = loopManager.getResultStringArray();
+
+				resultLoop2Array = loopManager.getResultLoop2Array();
+
+				//インデックスが指す，ある結果を表示する
+				nowProcessResultArray = resultLoop2Array.get(nowProcessResultIndex);
+				//System.out.println("----"+nowprocessResultIndex+"----");//デバッグ用
+				//System.out.println("nowprocessResultArray.size() = "+nowprocessResultArray.size());
+
+				//結果の文字列を表示する
+
+
+				//ある結果のあるLoopを処理する
+				Loop nowProcessLoop = nowProcessResultArray.get(nowProcessResultLoopIndex);
+
+				//LoopUnitを取り出して各マスを描画
+				for (LoopUnit resultLoop : nowProcessLoop.getLoopUnitArray()) {
+					resultX = resultLoop.getX();
+					resultY = resultLoop.getY();
+					resultZ = resultLoop.getZ();
+
+					// 決定ループの描画(Z=0:下，Z=1:上)
+					if( resultZ == 0){
+						resultLoopDraw(resultY, resultX);
+					}else{
+						translate(-x,-y,-z);
+						resultLoopDraw(resultY, resultX);
+						translate(x,y,z);
+					}
+
+					//System.out.println("x = "+resultX+" ,y = "+resultY);
+				}
+			}
+
+			// LoopArrayのサイズを保存
+			int processLoopArraySize = nowProcessResultArray.size() - 1;
+			if (nowProcessResultLoopIndex < processLoopArraySize) {
+				// ある結果の処理すべきLoopが残っている
+				nowProcessResultLoopIndex++;
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+			} else {
+				nowProcessResultLoopIndex = 0;
+				// ある結果のLoopは全て描画し終えた
+//				try {
+//					Thread.sleep(2000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+
+				int resultArraySize = resultLoop2Array.size() - 1;
+				if (nowProcessResultIndex < resultArraySize) {
+					nowProcessResultIndex++;
+				} else {
+					nowProcessResultIndex = 0;
+				}
+			}
+
+			resultDrawFlag = false;
 		}
 
 
@@ -287,6 +459,15 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 		//座標軸を戻す
 		//popMatrix();
+
+		//結果の論理式の描画
+		//TODO: Synchoronized構文を入れるとバグるよ，気をつけて
+		if (resultStringArray != null){
+			textSize(11);
+			text(resultStringArray.get(nowProcessResultIndex), -30, 120);
+		}
+
+
 
 		//白にフェードアウト
 		fadeToWhite();
@@ -324,11 +505,23 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 	}
 
 	//計算中のループ描画
-		public void CaluculatingLoopDraw(int i, int j){
-			fill(175,238,238);
-			rect(massW * j, massH * i, massW, massH);
+	public void CaluculatingLoopDraw(int i, int j){
+		fill(175,238,238);
+		rect(massW * j, massH * i, massW, massH);
+	}
 
-		}
+	//計算中のループ描画
+	public void CaluculatingSuccessLoopDraw(int i, int j){
+		fill(235,121,136);
+		rect(massW * j, massH * i, massW, massH);
+	}
+
+	//決定ループ描画
+	public void resultLoopDraw(int i, int j){
+		fill(235,121,136,75);
+		rect(massW * j, massH * i, massW, massH);
+	}
+
 	//白にフェード(表下)
 	public void fadeToWhite() {
 		noStroke();

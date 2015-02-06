@@ -118,6 +118,11 @@ public class LoopManager{
 	public void processCombinationLoop() {
 		ArrayList<ArrayList<Loop>> combinationLoopArray = new ArrayList<ArrayList<Loop>>();
 
+		if (successLoopArray.size() == 1) {
+			beforeLogicalLoop2Array.add(successLoopArray);
+			return;
+		}
+
 		//Loopの組み合わせを生成
 		CombinationGenerator combinationGenerator = new CombinationGenerator(successLoopArray.size());
 		for (ArrayList<Integer> combineArray : combinationGenerator.getCombine2Array()) {
