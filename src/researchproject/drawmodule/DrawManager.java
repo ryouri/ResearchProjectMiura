@@ -24,6 +24,7 @@ public class DrawManager {
 		calcurateManager.start();
 
 		try {
+			//描画クラスは時間差で生成する
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO 自動生成された catch ブロック
