@@ -37,6 +37,9 @@ public class LoopManager{
 	 */
 	private ArrayList<Loop> processLoopArray;
 
+
+	private ArrayList<ArrayList<Loop>> beforeLogicalLoop2Array;
+
 	/**
 	 * 最終的に結果として出力するループが格納される
 	 */
@@ -82,6 +85,7 @@ public class LoopManager{
 		successLoopArray = new ArrayList<Loop>();
 		allLoopArray = new ArrayList<Loop>();
 		processLoopArray = new ArrayList<Loop>();
+		beforeLogicalLoop2Array = new ArrayList<ArrayList<Loop>>();
 	}
 
 	LoopGenerator loopGenerator;
@@ -129,13 +133,52 @@ public class LoopManager{
 		int yMax = massArray[0].length;
 		int xMax = massArray[0][0].length;
 
+		ArrayList<ArrayList<Loop>> judgedEncircleLoopArray = new ArrayList<ArrayList<Loop>>();
+
+		//まずは囲めていないLoopを排除する
 		//組み合わせごとにLoopを処理する
 		for (ArrayList<Loop> combinationLoops : combinationLoopArray) {
 			//囲まれていなければならない情報の配列を生成する
 			boolean[][][] encircleArray = new boolean[zMax][yMax][xMax];
 			initEncircleArray(encircleArray, massArray);
 
-			//TODO: ここから続きを作成する
+			// 囲めていないマスがあるかを確認する
+			for (Loop loop : combinationLoops) {
+				for (LoopUnit loopUnit : loop.getLoopUnitArray()) {
+					encircleArray[loopUnit.getZ()][loopUnit.getY()][loopUnit.getX()] = false;
+				}
+			}
+
+			// 囲めていないマスがあればそのLoopはダメ！
+			boolean loopOKFlag = true;
+			for (int z = 0; z < encircleArray.length; z++) {
+				for (int y = 0; y < encircleArray[0].length; y++) {
+					for (int x = 0; x < encircleArray[0][0].length; x++) {
+						if (encircleArray[z][y][x] == true) {
+							loopOKFlag = false;
+						}
+					}
+				}
+			}
+
+			if (loopOKFlag) {
+				judgedEncircleLoopArray.add(combinationLoops);
+			}
+		}
+
+		int minLoopNum = 999;
+		//Loopの数が少ないLoopを抜き出す
+		//最もLoopが少ない組み合わせの値を抜き出す
+		for (ArrayList<Loop> combinationLoops : judgedEncircleLoopArray) {
+			if (minLoopNum > combinationLoops.size()) {
+				minLoopNum = combinationLoops.size();
+			}
+		}
+		//Loopが少ない組み合わせを結果として抜き出す
+		for (ArrayList<Loop> combinationLoops : judgedEncircleLoopArray) {
+			if (minLoopNum == combinationLoops.size()) {
+				beforeLogicalLoop2Array.add(combinationLoops);
+			}
 		}
 	}
 
@@ -160,62 +203,61 @@ public class LoopManager{
 	public void generateLogicalEquation() {
 		//notの記号
 		String not = "¬";
-		String logicalEquation = new String();
-
-		//成功した各ループを走査する
-		for	(Loop loop : successLoopArray) {
-			//各変数を正負どちらで表示すべきかを保持する
-			HashMap<String, Integer> logicVarMap = new HashMap<String, Integer>();
-
-			//各ループの構成単位を走査する
-			for (LoopUnit loopUnit : loop.getLoopUnitArray()) {
-				Mass mass = massManager.getMassArray()[loopUnit.getZ()][loopUnit.getY()][loopUnit.getX()];
-				HashMap<String, Integer> varPosMap = mass.getVariablePosMap();
-
-				//各変数について走査する
-				for (String varStr : varPosMap.keySet()) {
-					int varValue = varPosMap.get(varStr);
-					//既にMapに入ってたら
-					if (logicVarMap.containsKey(varStr)) {
-						//前回までの値を取得
-						int alreadyVarValue = logicVarMap.get(varStr);
-						//前回までの値と不一致，つまりその変数を論理式に直さない場合は-1を入れておく
-						if (alreadyVarValue != varValue) {
-							logicVarMap.put(varStr, -1);
-						}
-					} else {
-						//まだMapに入ってないため，追加する
-						logicVarMap.put(varStr, varValue);
-					}
-				}
-			}
-
-			//保存したMapから論理式を表示する
-			for (String varStr : logicVarMap.keySet()) {
-				int varValue = logicVarMap.get(varStr);
-				if (varValue == 1) {
-					logicalEquation += varStr;
-				} else if (varValue == 0){
-					logicalEquation += not + varStr;
-				}
-			}
-			logicalEquation += " + ";
-		}
-
-		logicalEquation = logicalEquation.substring(0, logicalEquation.lastIndexOf(" + "));
-		logicalEquation = logicalEquation.replace(" ", "");
-
-		System.out.println(logicalEquation);
 
 		resultStringArray = new ArrayList<String>();
-		resultStringArray.add(logicalEquation);
-		resultStringArray.add(logicalEquation);
-
-		//デバッグ用の処理
-		//resultLoop2Arrayにテスト用のArrayを追加
 		resultLoop2Array = new ArrayList<ArrayList<Loop>>();
-		resultLoop2Array.add(successLoopArray);
-		resultLoop2Array.add(successLoopArray);
+
+		for (ArrayList<Loop> successLoops : beforeLogicalLoop2Array) {
+			String logicalEquation = new String();
+
+			//成功した各ループを走査する
+			for	(Loop loop : successLoops) {
+				//各変数を正負どちらで表示すべきかを保持する
+				HashMap<String, Integer> logicVarMap = new HashMap<String, Integer>();
+
+				//各ループの構成単位を走査する
+				for (LoopUnit loopUnit : loop.getLoopUnitArray()) {
+					Mass mass = massManager.getMassArray()[loopUnit.getZ()][loopUnit.getY()][loopUnit.getX()];
+					HashMap<String, Integer> varPosMap = mass.getVariablePosMap();
+
+					//各変数について走査する
+					for (String varStr : varPosMap.keySet()) {
+						int varValue = varPosMap.get(varStr);
+						//既にMapに入ってたら
+						if (logicVarMap.containsKey(varStr)) {
+							//前回までの値を取得
+							int alreadyVarValue = logicVarMap.get(varStr);
+							//前回までの値と不一致，つまりその変数を論理式に直さない場合は-1を入れておく
+							if (alreadyVarValue != varValue) {
+								logicVarMap.put(varStr, -1);
+							}
+						} else {
+							//まだMapに入ってないため，追加する
+							logicVarMap.put(varStr, varValue);
+						}
+					}
+				}
+
+				//保存したMapから論理式を表示する
+				for (String varStr : logicVarMap.keySet()) {
+					int varValue = logicVarMap.get(varStr);
+					if (varValue == 1) {
+						logicalEquation += varStr;
+					} else if (varValue == 0){
+						logicalEquation += not + varStr;
+					}
+				}
+				logicalEquation += " + ";
+			}
+
+			logicalEquation = logicalEquation.substring(0, logicalEquation.lastIndexOf(" + "));
+			logicalEquation = logicalEquation.replace(" ", "");
+
+			System.out.println(logicalEquation);
+
+			resultStringArray.add(logicalEquation);
+			resultLoop2Array.add(successLoops);
+		}
 	}
 
 	public ArrayList<ArrayList<Loop>> getResultLoop2Array() {
