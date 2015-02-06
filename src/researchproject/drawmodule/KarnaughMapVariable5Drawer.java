@@ -139,7 +139,7 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		        }
 		    };
 
-		    timer.schedule(task, 2000L, 400L);
+		    timer.schedule(task, 2000L, 200L);
 
 		}
 	//------

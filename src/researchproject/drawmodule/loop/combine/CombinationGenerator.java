@@ -22,7 +22,6 @@ public class CombinationGenerator {
 	public CombinationGenerator(int n) {
 		if (n == 1) {
 			System.out.println("1じゃ組み合わせも生成できんぜよ");
-			System.exit(1);
 		}
 
 		this.n = n;

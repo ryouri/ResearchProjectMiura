@@ -119,7 +119,7 @@ public class LoopManager{
 		for (ArrayList<Integer> combineArray : combinationGenerator.getCombine2Array()) {
 			ArrayList<Loop> combinationLoops = new ArrayList<Loop>();
 			for (Integer num : combineArray) {
-				combinationLoops.add(successLoopArray.get(num - 1));
+				combinationLoops.add(successLoopArray.get(num));
 			}
 			combinationLoopArray.add(combinationLoops);
 		}
