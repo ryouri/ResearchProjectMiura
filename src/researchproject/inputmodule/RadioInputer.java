@@ -6,7 +6,7 @@ import processing.core.PFont;
 import researchproject.drawmodule.DrawManager;
 
 public class RadioInputer extends PApplet {
-	
+
 	StartInput startInput;
 	public void setStartInput(StartInput startInput) {
 		this.startInput = startInput;
@@ -22,9 +22,9 @@ class SRadio
   int hoverFillSquareColor=0xff00578E;
   int afterSquareColor=0xff00A3E8;
   int afterFillSquareColor=0xff00A3E8;
-  
+
   boolean fillBeforeSquare=false;
-  
+
   PFont rText;
   int textColor=0xff000000;
   int textPoints=14;
@@ -35,86 +35,86 @@ class SRadio
 
   String[] radioText;
   boolean[] radioChoose;
-  
+
   int over=0;
   int nC;
-  
+
   int rX, rY;
-  
+
   float maxTextWidth=0;
-  
+
   String radioLabel;
-  
+
   boolean debug=false;
   boolean pressOnlyOnce=true;
-  int deb=0; 
+  int deb=0;
 
-////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////
   SRadio(int x, int y, String[] op, String id)
   {
     rX=x;
     rY=y;
     radioText=op;
-    
+
     nC=op.length;
     radioChoose = new boolean[nC];
-    
-    rText = createFont("Arial",16,true);  
+
+    rText = createFont("Arial",16,true);
     textFont(rText,textPoints);
     textAlign(LEFT);
-    
+
     for (int i=0; i<nC; i++)
     {
       if (textWidth(radioText[i]) > maxTextWidth) maxTextWidth=textWidth(radioText[i]);
       radioChoose[i]=false;
     }
-     
+
     radioChoose[over]=true;
-     
+
     radioLabel=id;
   }
-////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////
   public void setValue(int n)
   {
     if (n<0) n=0;
     if (n>(nC-1)) n=nC-1;
-     
+
    for (int i=0; i<nC; i++) radioChoose[i]=false;
-   radioChoose[n]=true; 
+   radioChoose[n]=true;
    over=n;
   }
-////////////////////////////////////////////////////////  
+////////////////////////////////////////////////////////
   public void deBounce(int n)
   {
     if (pressOnlyOnce)
       return;
     else
-       
+
     if (deb++ > n)
     {
       deb=0;
       pressOnlyOnce=true;
     }
-     
+
   }
-////////////////////////////////////////////////////////    
+////////////////////////////////////////////////////////
   public boolean mouseOver()
   {
     boolean result=false;
-       
+
     for (int i=0; i<nC; i++)
     {
       if ((mouseX>=(rX+(i*(squareSpacing+squareLength)))) && (mouseX<=(rX+(i*(squareSpacing+squareLength))+squareLength)) && (mouseY>=(rY)) && (mouseY<=(rY+squareLength)))
       {
         result=true;
-        fill(hoverFillSquareColor); 
-        stroke(hoverSquareColor); 
+        fill(hoverFillSquareColor);
+        stroke(hoverSquareColor);
         rect(rX+i*(squareSpacing+squareLength), rY, squareLength, squareLength);
         if (radioChoose[i])
         fill(afterFillSquareColor);
-        stroke(afterSquareColor);         
+        stroke(afterSquareColor);
         rect(rX+i*(squareSpacing+squareLength), rY, squareLength, squareLength);
-        
+
         if (mousePressed && mouseButton==LEFT && pressOnlyOnce)
         {
           over=i;
@@ -131,100 +131,100 @@ class SRadio
     }
     return result;
   }
-//////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////
   public void drawRect()
   {
     strokeWeight(squareLineWidth);
    for (int i=0; i<nC; i++)
     {
-      fill(beforeFillSquareColor); 
-      stroke(beforeSquareColor); 
+      fill(beforeFillSquareColor);
+      stroke(beforeSquareColor);
       rect(rX+i*(squareSpacing+squareLength), rY, squareLength, squareLength);
- 
+
       fill(afterFillSquareColor);
-      stroke(afterSquareColor); 
- 
+      stroke(afterSquareColor);
+
       if (radioChoose[i])
       rect(rX+i*(squareSpacing+squareLength), rY, squareLength, squareLength);
     }
-    mouseOver();    
+    mouseOver();
   }
-  
-  /////////////////////////////////////////////////////// 
+
+  ///////////////////////////////////////////////////////
   public int update()
   {
     drawRect();
     return over;
-   
+
   }
- 
-/////////////////////////////////////////////////////// 
+
+///////////////////////////////////////////////////////
   public int getValue()
   {
     return over;
   }
-  
-/////////////////////////////////////////////////////// 
+
+///////////////////////////////////////////////////////
   public void setDebugOn()
   {
     debug=true;
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setDebugOff()
   {
     debug=false;
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void printGeometry()
   {
     println("radio = new ADradio("+rX+", "+rY+", arrayOfOptions"+", \""+radioLabel+"\");");
- 
+
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setBeforeSquareColor(int c)
   {
     beforeSquareColor=c;
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setBeforeFillSquareColor(int c)
   {
     beforeFillSquareColor=c;
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setAfterSquareColor(int c)
   {
     afterSquareColor=c;
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setAfterFillSquareColor(int c)
   {
     afterFillSquareColor=c;
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setTextColor(int c)
   {
     textColor=c;
   }
 
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setTextSize(int s)
   {
     textPoints=s;
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setSquareLength(int s)
   {
     squareLength=s;
   }
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
   public void setLabel(String l)
   {
     radioLabel=l;
   }
-  
+
 }
 
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
 String[] options = {"0", "1","d"};
 SRadio radioButton0;
 SRadio radioButton1;
@@ -259,7 +259,7 @@ SRadio radioButton29;
 SRadio radioButton30;
 SRadio radioButton31;
 
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
 int radio;
 PrintWriter writer;
 PFont output;
@@ -279,21 +279,21 @@ int ybutton=ytop+17;   //button(y)
 int xsep=250;          //ABCDE(x)
 int ysep=25;           //0000(y)
 
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
 public void setup()
 {
   size(600,600);
   smooth();
-  output = createFont("Arial",20,true); 
- 
+  output = createFont("Arial",20,true);
+
   radioButton0 = new SRadio(xbutton, ybutton, options, "radioButton0");
   radioButton0.setDebugOn();
   radioButton0.setValue(0);
-  
+
   radioButton1 = new SRadio(xbutton, ybutton+ysep, options, "radioButton1");
   radioButton1.setDebugOn();
   radioButton1.setValue(0);
- 
+
   radioButton2 = new SRadio(xbutton, ybutton+ysep*2, options, "radioButton2");
   radioButton2.setDebugOn();
   radioButton2.setValue(0);
@@ -308,56 +308,56 @@ public void setup()
 
   radioButton5 = new SRadio(xbutton, ybutton+ysep*5, options, "radioButton5");
   radioButton5.setDebugOn();
-  radioButton5.setValue(0);  
-  
+  radioButton5.setValue(0);
+
   radioButton6 = new SRadio(xbutton, ybutton+ysep*6, options, "radioButton6");
   radioButton6.setDebugOn();
-  radioButton6.setValue(0);  
-  
+  radioButton6.setValue(0);
+
   radioButton7 = new SRadio(xbutton, ybutton+ysep*7, options, "radioButton7");
   radioButton7.setDebugOn();
-  radioButton7.setValue(0);  
+  radioButton7.setValue(0);
 
   radioButton8 = new SRadio(xbutton, ybutton+ysep*8, options, "radioButton8");
   radioButton8.setDebugOn();
-  radioButton8.setValue(0);  
+  radioButton8.setValue(0);
 
   radioButton9 = new SRadio(xbutton, ybutton+ysep*9, options, "radioButton9");
   radioButton9.setDebugOn();
-  radioButton9.setValue(0);  
+  radioButton9.setValue(0);
 
   radioButton10 = new SRadio(xbutton, ybutton+ysep*10, options, "radioButton10");
   radioButton10.setDebugOn();
-  radioButton10.setValue(0);  
-  
+  radioButton10.setValue(0);
+
   radioButton11 = new SRadio(xbutton, ybutton+ysep*11, options, "radioButton11");
   radioButton11.setDebugOn();
   radioButton11.setValue(0);
-  
+
   radioButton12 = new SRadio(xbutton, ybutton+ysep*12, options, "radioButton12");
   radioButton12.setDebugOn();
-  radioButton12.setValue(0);  
+  radioButton12.setValue(0);
 
   radioButton13 = new SRadio(xbutton, ybutton+ysep*13, options, "radioButton13");
   radioButton13.setDebugOn();
-  radioButton13.setValue(0); 
+  radioButton13.setValue(0);
 
   radioButton14 = new SRadio(xbutton, ybutton+ysep*14, options, "radioButton14");
   radioButton14.setDebugOn();
-  radioButton14.setValue(0); 
+  radioButton14.setValue(0);
 
   radioButton15 = new SRadio(xbutton, ybutton+ysep*15, options, "radioButton15");
   radioButton15.setDebugOn();
-  radioButton15.setValue(0); 
-  
+  radioButton15.setValue(0);
+
   radioButton16 = new SRadio(xbutton+xsep, ybutton, options, "radioButton0");
   radioButton16.setDebugOn();
   radioButton16.setValue(0);
-  
+
   radioButton17 = new SRadio(xbutton+xsep, ybutton+ysep, options, "radioButton1");
   radioButton17.setDebugOn();
   radioButton17.setValue(0);
- 
+
   radioButton18 = new SRadio(xbutton+xsep, ybutton+ysep*2, options, "radioButton2");
   radioButton18.setDebugOn();
   radioButton18.setValue(0);
@@ -372,80 +372,80 @@ public void setup()
 
   radioButton21 = new SRadio(xbutton+xsep, ybutton+ysep*5, options, "radioButton5");
   radioButton21.setDebugOn();
-  radioButton21.setValue(0);  
-  
+  radioButton21.setValue(0);
+
   radioButton22 = new SRadio(xbutton+xsep, ybutton+ysep*6, options, "radioButton6");
   radioButton22.setDebugOn();
-  radioButton22.setValue(0);  
-  
+  radioButton22.setValue(0);
+
   radioButton23 = new SRadio(xbutton+xsep, ybutton+ysep*7, options, "radioButton7");
   radioButton23.setDebugOn();
-  radioButton23.setValue(0);  
+  radioButton23.setValue(0);
 
   radioButton24 = new SRadio(xbutton+xsep, ybutton+ysep*8, options, "radioButton8");
   radioButton24.setDebugOn();
-  radioButton24.setValue(0);  
+  radioButton24.setValue(0);
 
   radioButton25 = new SRadio(xbutton+xsep, ybutton+ysep*9, options, "radioButton9");
   radioButton25.setDebugOn();
-  radioButton25.setValue(0);  
+  radioButton25.setValue(0);
 
   radioButton26 = new SRadio(xbutton+xsep, ybutton+ysep*10, options, "radioButton10");
   radioButton26.setDebugOn();
-  radioButton26.setValue(0);  
-  
+  radioButton26.setValue(0);
+
   radioButton27 = new SRadio(xbutton+xsep, ybutton+ysep*11, options, "radioButton11");
   radioButton27.setDebugOn();
   radioButton27.setValue(0);
-  
+
   radioButton28 = new SRadio(xbutton+xsep, ybutton+ysep*12, options, "radioButton12");
   radioButton28.setDebugOn();
-  radioButton28.setValue(0);  
+  radioButton28.setValue(0);
 
   radioButton29 = new SRadio(xbutton+xsep, ybutton+ysep*13, options, "radioButton13");
   radioButton29.setDebugOn();
-  radioButton29.setValue(0); 
+  radioButton29.setValue(0);
 
   radioButton30 = new SRadio(xbutton+xsep, ybutton+ysep*14, options, "radioButton14");
   radioButton30.setDebugOn();
-  radioButton30.setValue(0); 
+  radioButton30.setValue(0);
 
   radioButton31 = new SRadio(xbutton+xsep, ybutton+ysep*15, options, "radioButton15");
   radioButton31.setDebugOn();
-  radioButton31.setValue(0); 
+  radioButton31.setValue(0);
 }
 
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
 public void draw()
 {
   background(0xff000000);
   if(mouseX>=80 && mouseX<=180 && mouseY>=30 && mouseY<=67){
-    fill(hboxcolor); 
+    fill(hboxcolor);
   }else{
-  fill(bboxcolor); 
+  fill(bboxcolor);
   }
   rect(80,30,100,37,7);
   if(mouseX>=width-170 && mouseX<=width-170+100 && mouseY>=30 && mouseY<=67){
-  fill(hboxcolor); 
+  fill(hboxcolor);
   }else{
-  fill(bboxcolor); 
+  fill(bboxcolor);
   }
   rect(width-170,30,100,37,7);
-  
+
   int m = 255*(millis()%3000)/3000;
   if(m<125){
    n=m+125;
   }else if(m>=125){
    n=350-m;
   }
-///////////////////////////////////////////////////////   
+///////////////////////////////////////////////////////
   textSize(34);
   fill(0xffFFFFFF);
   text("input",280,60);
   textSize(24);
   text("Formula",87,55);
   text("K-map",445,55);
-///////////////////////////////////////////////////////   
+///////////////////////////////////////////////////////
   switch(stat){
     case 0:
     radioButton0.update();
@@ -456,20 +456,20 @@ public void draw()
     radioButton5.update();
     radioButton6.update();
     radioButton7.update();
-    
+
     noStroke();
-    fill(0xff00A3E8,n);    
-    triangle(259,17,269,27,249,27);  
-    
+    fill(0xff00A3E8,n);
+    triangle(259,17,269,27,249,27);
+
     textSize(34);
     fill(0xffFFFFFF);
     text("3",250,60);
-    
+
     textSize(18);
     fill(0xffFFFFFF);
     text("      A B C",xlab,ytop);
-    text("S   0   1   d",Slab,ytop);    
-    
+    text("S   0   1   d",Slab,ytop);
+
     textSize(20);
     fill(0xffFFFFFF);
     text("      0 0 0",xlab,ylab);
@@ -480,8 +480,8 @@ public void draw()
     text("      1 0 1",xlab,ylab+ysep*5);
     text("      1 1 0",xlab,ylab+ysep*6);
     text("      1 1 1",xlab,ylab+ysep*7);
-    
-    textSize(20);  
+
+    textSize(20);
     fill(0xffFFFFFF);
     text(options[radioButton0.getValue()], Sx,ylab);
     text(options[radioButton1.getValue()], Sx,ylab+ysep);
@@ -491,9 +491,9 @@ public void draw()
     text(options[radioButton5.getValue()], Sx,ylab+ysep*5);
     text(options[radioButton6.getValue()], Sx,ylab+ysep*6);
     text(options[radioButton7.getValue()], Sx,ylab+ysep*7);
-    break;    
-///////////////////////////////////////////////////////     
-    case 1:  
+    break;
+///////////////////////////////////////////////////////
+    case 1:
     radioButton0.update();
     radioButton1.update();
     radioButton2.update();
@@ -510,21 +510,21 @@ public void draw()
     radioButton13.update();
     radioButton14.update();
     radioButton15.update();
-    
-    noStroke();    
-    fill(0xff00A3E8,n);  
-    triangle(259,17,269,27,249,27);  
+
+    noStroke();
+    fill(0xff00A3E8,n);
+    triangle(259,17,269,27,249,27);
     triangle(259,80,269,70,249,70);
- 
-  
+
+
     textSize(34);
     fill(0xffFFFFFF);
     text("4",250,60);
-  
+
     textSize(18);
     fill(0xffFFFFFF);
     text("   A B C D",xlab,ytop);
-    text("S   0   1   d",Slab,ytop);    
+    text("S   0   1   d",Slab,ytop);
     textSize(20);
     fill(0xffFFFFFF);
 
@@ -544,8 +544,8 @@ public void draw()
     text("   1 1 0 1",xlab,ylab+ysep*13);
     text("   1 1 1 0",xlab,ylab+ysep*14);
     text("   1 1 1 1",xlab,ylab+ysep*15);
-  
-    textSize(20);  
+
+    textSize(20);
     fill(0xffFFFFFF);
     text(options[radioButton0.getValue()], Sx,ylab);
     text(options[radioButton1.getValue()], Sx,ylab+ysep);
@@ -564,8 +564,8 @@ public void draw()
     text(options[radioButton14.getValue()], Sx,ylab+ysep*14);
     text(options[radioButton15.getValue()], Sx,ylab+ysep*15);
     break;
-///////////////////////////////////////////////////////     
-    case 2: 
+///////////////////////////////////////////////////////
+    case 2:
     radioButton0.update();
     radioButton1.update();
     radioButton2.update();
@@ -597,23 +597,23 @@ public void draw()
     radioButton28.update();
     radioButton29.update();
     radioButton30.update();
-    radioButton31.update(); 
-    
-    noStroke(); 
-    fill(0xff00A3E8,n);     
+    radioButton31.update();
+
+    noStroke();
+    fill(0xff00A3E8,n);
     triangle(259,80,269,70,249,70);
 
     textSize(34);
     fill(0xffFFFFFF);
     text("5",250,60);
-    
+
     textSize(18);
     fill(0xffFFFFFF);
     text("A B C D E",xlab,ytop);
-    text("A B C D E",xlab+xsep,ytop);    
+    text("A B C D E",xlab+xsep,ytop);
     text("S   0   1   d",Slab,ytop);
-    text("S   0   1   d",Slab+xsep,ytop); 
-    
+    text("S   0   1   d",Slab+xsep,ytop);
+
     textSize(20);
     fill(0xffFFFFFF);
 
@@ -633,7 +633,7 @@ public void draw()
     text("0 1 1 0 1",xlab,ylab+ysep*13);
     text("0 1 1 1 0",xlab,ylab+ysep*14);
     text("0 1 1 1 1",xlab,ylab+ysep*15);
-    
+
     text("1 0 0 0 0",xlab+xsep,ylab);
     text("1 0 0 0 1",xlab+xsep,ylab+ysep);
     text("1 0 0 1 0",xlab+xsep,ylab+ysep*2);
@@ -650,8 +650,8 @@ public void draw()
     text("1 1 1 0 1",xlab+xsep,ylab+ysep*13);
     text("1 1 1 1 0",xlab+xsep,ylab+ysep*14);
     text("1 1 1 1 1",xlab+xsep,ylab+ysep*15);
- 
-    textSize(20);  
+
+    textSize(20);
     fill(0xffFFFFFF);
     text(options[radioButton0.getValue()], Sx,ylab);
     text(options[radioButton1.getValue()], Sx,ylab+ysep);
@@ -689,7 +689,7 @@ public void draw()
 }
 }
 
-/////////////////////////////////////////////////////// 
+///////////////////////////////////////////////////////
 public void mouseClicked(){
 	//formulaが押された時
 	if (mouseX >= 80 && mouseX <= 180 && mouseY >= 30 && mouseY <= 67) {
@@ -707,43 +707,47 @@ public void mouseClicked(){
         writer.println("0,0,0,1,0,"+options[radioButton2.getValue()]);
         writer.println("0,0,0,1,1,"+options[radioButton3.getValue()]);
         writer.println("0,0,1,0,0,"+options[radioButton4.getValue()]);
-        writer.println("0,0,1,0,1,"+options[radioButton5.getValue()]);  
-        writer.println("0,0,1,1,0,"+options[radioButton6.getValue()]);   
-        writer.println("0,0,1,1,1,"+options[radioButton7.getValue()]);   
-        writer.println("0,1,0,0,0,"+options[radioButton8.getValue()]);   
-        writer.println("0,1,0,0,1,"+options[radioButton9.getValue()]);   
-        writer.println("0,1,0,1,0,"+options[radioButton10.getValue()]);   
-        writer.println("0,1,0,1,1,"+options[radioButton11.getValue()]);   
-        writer.println("0,1,1,0,0,"+options[radioButton12.getValue()]);   
-        writer.println("0,1,1,0,1,"+options[radioButton13.getValue()]);   
-        writer.println("0,1,1,1,0,"+options[radioButton14.getValue()]);   
+        writer.println("0,0,1,0,1,"+options[radioButton5.getValue()]);
+        writer.println("0,0,1,1,0,"+options[radioButton6.getValue()]);
+        writer.println("0,0,1,1,1,"+options[radioButton7.getValue()]);
+        writer.println("0,1,0,0,0,"+options[radioButton8.getValue()]);
+        writer.println("0,1,0,0,1,"+options[radioButton9.getValue()]);
+        writer.println("0,1,0,1,0,"+options[radioButton10.getValue()]);
+        writer.println("0,1,0,1,1,"+options[radioButton11.getValue()]);
+        writer.println("0,1,1,0,0,"+options[radioButton12.getValue()]);
+        writer.println("0,1,1,0,1,"+options[radioButton13.getValue()]);
+        writer.println("0,1,1,1,0,"+options[radioButton14.getValue()]);
         writer.println("0,1,1,1,1,"+options[radioButton15.getValue()]);
         writer.println("1,0,0,0,0,"+options[radioButton16.getValue()]);
         writer.println("1,0,0,0,1,"+options[radioButton17.getValue()]);
         writer.println("1,0,0,1,0,"+options[radioButton18.getValue()]);
         writer.println("1,0,0,1,1,"+options[radioButton19.getValue()]);
         writer.println("1,0,1,0,0,"+options[radioButton20.getValue()]);
-        writer.println("1,0,1,0,1,"+options[radioButton21.getValue()]);  
-        writer.println("1,0,1,1,0,"+options[radioButton22.getValue()]);   
-        writer.println("1,0,1,1,1,"+options[radioButton23.getValue()]);   
-        writer.println("1,1,0,0,0,"+options[radioButton24.getValue()]);   
-        writer.println("1,1,0,0,1,"+options[radioButton25.getValue()]);   
-        writer.println("1,1,0,1,0,"+options[radioButton26.getValue()]);   
-        writer.println("1,1,0,1,1,"+options[radioButton27.getValue()]);   
-        writer.println("1,1,1,0,0,"+options[radioButton28.getValue()]);   
-        writer.println("1,1,1,0,1,"+options[radioButton29.getValue()]);   
-        writer.println("1,1,1,1,0,"+options[radioButton30.getValue()]);   
-        writer.println("1,1,1,1,1,"+options[radioButton31.getValue()]);       
+        writer.println("1,0,1,0,1,"+options[radioButton21.getValue()]);
+        writer.println("1,0,1,1,0,"+options[radioButton22.getValue()]);
+        writer.println("1,0,1,1,1,"+options[radioButton23.getValue()]);
+        writer.println("1,1,0,0,0,"+options[radioButton24.getValue()]);
+        writer.println("1,1,0,0,1,"+options[radioButton25.getValue()]);
+        writer.println("1,1,0,1,0,"+options[radioButton26.getValue()]);
+        writer.println("1,1,0,1,1,"+options[radioButton27.getValue()]);
+        writer.println("1,1,1,0,0,"+options[radioButton28.getValue()]);
+        writer.println("1,1,1,0,1,"+options[radioButton29.getValue()]);
+        writer.println("1,1,1,1,0,"+options[radioButton30.getValue()]);
+        writer.println("1,1,1,1,1,"+options[radioButton31.getValue()]);
         writer.flush();
         writer.close();
+
+        //三澤 20150122
+        //描画プログラムの実行
+        new DrawManager("input5.csv");
       }
 
        if(mouseX>=249 && mouseX<=269 && mouseY>=70 && mouseY<=80){
         stat=1;
       }
       break;
-/////////////////////////////////////////////////////// 
-    case 1: 
+///////////////////////////////////////////////////////
+    case 1:
       if(mouseX>=width-170 && mouseX<=width-170+100 && mouseY>=30 && mouseY<=67){
         writer =  createWriter("input4.csv");
 
@@ -753,20 +757,20 @@ public void mouseClicked(){
         writer.println("0,0,1,0,"+options[radioButton2.getValue()]);
         writer.println("0,0,1,1,"+options[radioButton3.getValue()]);
         writer.println("0,1,0,0,"+options[radioButton4.getValue()]);
-        writer.println("0,1,0,1,"+options[radioButton5.getValue()]);  
-        writer.println("0,1,1,0,"+options[radioButton6.getValue()]);   
-        writer.println("0,1,1,1,"+options[radioButton7.getValue()]);   
-        writer.println("1,0,0,0,"+options[radioButton8.getValue()]);   
-        writer.println("1,0,0,1,"+options[radioButton9.getValue()]);   
-        writer.println("1,0,1,0,"+options[radioButton10.getValue()]);   
-        writer.println("1,0,1,1,"+options[radioButton11.getValue()]);   
-        writer.println("1,1,0,0,"+options[radioButton12.getValue()]);   
-        writer.println("1,1,0,1,"+options[radioButton13.getValue()]);   
-        writer.println("1,1,1,0,"+options[radioButton14.getValue()]);   
-        writer.println("1,1,1,1,"+options[radioButton15.getValue()]);       
+        writer.println("0,1,0,1,"+options[radioButton5.getValue()]);
+        writer.println("0,1,1,0,"+options[radioButton6.getValue()]);
+        writer.println("0,1,1,1,"+options[radioButton7.getValue()]);
+        writer.println("1,0,0,0,"+options[radioButton8.getValue()]);
+        writer.println("1,0,0,1,"+options[radioButton9.getValue()]);
+        writer.println("1,0,1,0,"+options[radioButton10.getValue()]);
+        writer.println("1,0,1,1,"+options[radioButton11.getValue()]);
+        writer.println("1,1,0,0,"+options[radioButton12.getValue()]);
+        writer.println("1,1,0,1,"+options[radioButton13.getValue()]);
+        writer.println("1,1,1,0,"+options[radioButton14.getValue()]);
+        writer.println("1,1,1,1,"+options[radioButton15.getValue()]);
         writer.flush();
         writer.close();
-        
+
         //三澤 20150122
         //描画プログラムの実行
         new DrawManager("input4.csv");
@@ -776,9 +780,9 @@ public void mouseClicked(){
       }else if(mouseX>=249 && mouseX<=269 && mouseY>=70 && mouseY<=80){
         stat=0;
       }
-       
+
       break;
-///////////////////////////////////////////////////////       
+///////////////////////////////////////////////////////
     case 0:
       if(mouseX>=width-170 && mouseX<=width-170+100 && mouseY>=30 && mouseY<=67){
         writer =  createWriter("input3.csv");
@@ -789,18 +793,18 @@ public void mouseClicked(){
         writer.println("0,1,0,"+options[radioButton2.getValue()]);
         writer.println("0,1,1,"+options[radioButton3.getValue()]);
         writer.println("1,0,0,"+options[radioButton4.getValue()]);
-        writer.println("1,0,1,"+options[radioButton5.getValue()]);  
-        writer.println("1,1,0,"+options[radioButton6.getValue()]);   
-        writer.println("1,1,1,"+options[radioButton7.getValue()]);      
+        writer.println("1,0,1,"+options[radioButton5.getValue()]);
+        writer.println("1,1,0,"+options[radioButton6.getValue()]);
+        writer.println("1,1,1,"+options[radioButton7.getValue()]);
         writer.flush();
         writer.close();
       }
-        
+
        if(mouseX>=249 && mouseX<=269 && mouseY>=17 && mouseY<=27){
          stat=1;
        }
       break;
-  }          
+  }
 }
 
   static public void main(String[] passedArgs) {

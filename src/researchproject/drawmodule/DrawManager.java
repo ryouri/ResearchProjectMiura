@@ -24,6 +24,7 @@ public class DrawManager {
 		calcurateManager.start();
 
 		try {
+			//描画クラスは時間差で生成する
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO 自動生成された catch ブロック
@@ -31,20 +32,20 @@ public class DrawManager {
 		}
 		//4変数
 		//カルノー図描画クラスを生成し，Mass管理クラスを渡す
-//		KarnaughMapVariable4Drawer karnaughMapDrawer = new KarnaughMapVariable4Drawer();
-//		karnaughMapDrawer.setMassManager(massManager);
-//		karnaughMapDrawer.setCalcurateManager(calcurateManager);
-//		karnaughMapDrawer.init();
-
-		//矢部さんの5変数プログラムを実行
-		KarnaughMapVariable5Drawer karnaughMapDrawer = new KarnaughMapVariable5Drawer();
+		KarnaughMapVariable4Drawer karnaughMapDrawer = new KarnaughMapVariable4Drawer();
 		karnaughMapDrawer.setMassManager(massManager);
 		karnaughMapDrawer.setCalcurateManager(calcurateManager);
 		karnaughMapDrawer.init();
 
+		//矢部さんの5変数プログラムを実行
+//		KarnaughMapVariable5Drawer karnaughMapDrawer = new KarnaughMapVariable5Drawer();
+//		karnaughMapDrawer.setMassManager(massManager);
+//		karnaughMapDrawer.setCalcurateManager(calcurateManager);
+//		karnaughMapDrawer.init();
+
 		//JFrameに貼り付けることで，JAppletを表示する
 		JFrame frame = new JFrame("Test");
-		frame.setSize(karnaughMapDrawer.getWidth(), karnaughMapDrawer.getHeight()); // サイズは適当。上で作ったインスタンスからゲットするのもいいと思います。
+		frame.setSize(500, 500); // サイズは適当。上で作ったインスタンスからゲットするのもいいと思います。
 		frame.add(karnaughMapDrawer);
 		frame.setVisible(true);
 	}
