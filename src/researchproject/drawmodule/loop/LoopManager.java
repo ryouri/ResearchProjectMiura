@@ -101,6 +101,7 @@ public class LoopManager{
 			break;
 		case 5:
 			loopGenerator = new LoopGeneratorFor5(this);
+			break;
 		default :
 			System.err.println("変数の指定がおかしいです");
 			System.exit(-1);
