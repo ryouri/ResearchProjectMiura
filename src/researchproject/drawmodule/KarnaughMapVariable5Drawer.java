@@ -250,9 +250,9 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 	   					translate(x,y,z);
 	   				}else{
 	   					//座標軸の移動
-	   					translate(-x,-y,-z);
+	   					//translate(-x,-y,-z);
 	   					CaluculatingLoopDraw(processY,processX);
-	   					translate(x,y,z);
+	   					//translate(x,y,z);
 	   				}
 
 	   			}
