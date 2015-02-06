@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import researchproject.drawmodule.loop.generator.LoopGenerator;
 import researchproject.drawmodule.loop.generator.LoopGeneratorFor4;
+import researchproject.drawmodule.loop.generator.LoopGeneratorFor5;
 import researchproject.drawmodule.mass.Mass;
 import researchproject.drawmodule.mass.MassManager;
 
@@ -98,6 +99,8 @@ public class LoopManager{
 		case 4:
 			loopGenerator = new LoopGeneratorFor4(this);
 			break;
+		case 5:
+			loopGenerator = new LoopGeneratorFor5(this);
 		default :
 			System.err.println("変数の指定がおかしいです");
 			System.exit(-1);
