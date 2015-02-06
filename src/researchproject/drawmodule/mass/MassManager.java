@@ -107,7 +107,7 @@ public class MassManager {
 	 * @param addTableMassArray Massを保存する２次元配列
 	 * @param variableArray 変数名が格納された配列
 	 */
-	private void generateMass5Var(int z, int y, int x, Mass[][][] attMassTable, String[] variableArray) {
+	private void generateMass5Var(int z, int y, int x, Mass[][][] addMassTable, String[] variableArray) {
 		//Massインスタンスを生成
 		Mass mass = new Mass();
 
@@ -125,7 +125,9 @@ public class MassManager {
 		}
 
 		//変数E(5変数目)はz座標と対応させる
-		mass.getVariablePosMap().put(variableArray[variableArray.length - 1], z);
+		mass.getVariablePosMap().put(variableArray[variableArray.length - 2], z);
+
+		addMassTable[z][y][x] = mass;
 	}
 
 	/**
