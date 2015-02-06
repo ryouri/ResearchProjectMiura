@@ -24,17 +24,17 @@ public class CombinationGenerator {
 			System.out.println("1じゃ組み合わせも生成できんぜよ");
 			System.exit(1);
 		}
-		
+
 		this.n = n;
 		this.r = 2;
-		c = new int[20];
+		c = new int[100];
 		count = 0;
 		for (int j = 0; j < 20; j++) {
 			c[j] = 0;
 		}
-		
+
 		combine2Array = new ArrayList<ArrayList<Integer>>();
-		
+
 		generateCombine();
 	}
 
@@ -46,7 +46,7 @@ public class CombinationGenerator {
 			}
 		} else {
 			count = count + 1;
-			
+
 			//ArrayListを生成し，組み合わせを格納する3
 			ArrayList<Integer> combineArray = new ArrayList<Integer>();
 			for (int i = 1; i <= r; i++) {
@@ -57,10 +57,10 @@ public class CombinationGenerator {
 //			System.out.println();
 		}
 	}
-	
+
 	private void generateCombine() {
 		for (int i = 2; i <= n; i++) {
-			for (int j = 0; j < 20; j++) {
+			for (int j = 0; j < c.length; j++) {
 				c[j] = 0;
 			}
 			this.r = i;
@@ -95,14 +95,14 @@ public class CombinationGenerator {
 			else {
 				CombinationGenerator cb = new CombinationGenerator(n);
 				System.out.println(" n =  " + n +  " のとき");
-				
+
 				for (ArrayList<Integer> combineArray : cb.getCombine2Array()) {
 					for (Integer num : combineArray) {
 						System.out.print(" " + num);
 					}
 					System.out.println();
 				}
-				
+
 //				cb.combine(1);
 				System.out.println("( 全部で " + cb.count + " 通り )");
 			}

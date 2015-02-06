@@ -3,6 +3,7 @@ package researchproject.drawmodule.loop;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import researchproject.drawmodule.loop.combine.CombinationGenerator;
 import researchproject.drawmodule.loop.generator.LoopGenerator;
 import researchproject.drawmodule.loop.generator.LoopGeneratorFor4;
 import researchproject.drawmodule.loop.generator.LoopGeneratorFor5;
@@ -108,6 +109,48 @@ public class LoopManager{
 		}
 
 		loopGenerator.generateLoop();
+	}
+
+	public void processCombinationLoop() {
+		ArrayList<ArrayList<Loop>> combinationLoopArray = new ArrayList<ArrayList<Loop>>();
+
+		//Loopの組み合わせを生成
+		CombinationGenerator combinationGenerator = new CombinationGenerator(successLoopArray.size());
+		for (ArrayList<Integer> combineArray : combinationGenerator.getCombine2Array()) {
+			ArrayList<Loop> combinationLoops = new ArrayList<Loop>();
+			for (Integer num : combineArray) {
+				combinationLoops.add(successLoopArray.get(num - 1));
+			}
+			combinationLoopArray.add(combinationLoops);
+		}
+
+		Mass[][][] massArray = massManager.getMassArray();
+		int zMax = massArray.length;
+		int yMax = massArray[0].length;
+		int xMax = massArray[0][0].length;
+
+		//組み合わせごとにLoopを処理する
+		for (ArrayList<Loop> combinationLoops : combinationLoopArray) {
+			//囲まれていなければならない情報の配列を生成する
+			boolean[][][] encircleArray = new boolean[zMax][yMax][xMax];
+			initEncircleArray(encircleArray, massArray);
+
+			//TODO: ここから続きを作成する
+		}
+	}
+
+	private void initEncircleArray(boolean[][][] encircleArray, Mass[][][] massArray) {
+		for (int z = 0; z < encircleArray.length; z++) {
+			for (int y = 0; y < encircleArray[0].length; y++) {
+				for (int x = 0; x < encircleArray[0][0].length; x++) {
+					if (massArray[z][y][x].getState() == Mass.STATE_ONE) {
+						encircleArray[z][y][x] = true;
+					} else {
+						encircleArray[z][y][x] = false;
+					}
+				}
+			}
+		}
 	}
 
 	//TODO:ループの組み合わせを計算していない，つまり，ループの作り方が複数存在する場合は，ミスが出る
