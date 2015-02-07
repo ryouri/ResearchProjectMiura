@@ -469,6 +469,43 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		dotLine(-x,-y,4,0,-z);
 		dotLine(-x,-y,4,4,-z);
 
+		//マス周りの文字(横)0 or 1
+//		translate(-x,-y,-z);
+//		drawLetterCrosswise("0","0",0);
+//		drawLetterCrosswise("0","1",1);
+//		drawLetterCrosswise("1","1",2);
+//		drawLetterCrosswise("1","0",3);
+//
+//		//マス周りの文字(0 or 1)縦
+//		drawLetterLengthwise("0","0",0);
+//		drawLetterLengthwise("0","1",1);
+//		drawLetterLengthwise("1","1",2);
+//		drawLetterLengthwise("1","0",3);
+//
+//		drawLine(1);
+//		drawLetter("A", "B", "C", "D");
+//		translate(x,y,z);
+
+		drawLetter2("A","B","C","D");
+		drawLine2(1);
+
+		//マス周りの文字(0 or 1)横
+		drawLetterCrosswise2("0","0",0);
+		drawLetterCrosswise2("0","1",1);
+		drawLetterCrosswise2("1","1",2);
+		drawLetterCrosswise2("1","0",3);
+
+		//マス周りの文字(0 or 1)縦
+		drawLetterLengthwise2("0","0",0);
+		drawLetterLengthwise2("0","1",1);
+		drawLetterLengthwise2("1","1",2);
+		drawLetterLengthwise2("1","0",3);
+
+		//E = 1, E = 0 の描画
+		text("E = 1", massW * 4, 20, 95);
+		text("E = 0", massW * 4 + 4, 0);
+
+
 		//座標軸を戻す
 		//popMatrix();
 
@@ -476,8 +513,21 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		//TODO: Synchoronized構文を入れるとバグるよ，気をつけて
 		if (resultStringArray != null){
 			textSize(11);
-			text(resultStringArray.get(nowProcessResultIndex), -30, 120);
+			text(resultStringArray.get(nowProcessResultIndex), -25, 140);
 		}
+
+//		if (resultStringArray != null){
+//			textSize(11);
+//			String str = resultStringArray.get(nowProcessResultIndex);
+//			if( str.length() < 15){
+//				text( str, -25, 140);
+//			}else{
+//				text( str.substring(0, 0+15),-25,140);
+//				text( str.substring(15, str.length()), 80,160);
+//			}
+//
+//		}
+
 
 
 
@@ -571,10 +621,64 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 		translate(x,y,z);
 	}
 
+	//表周りの文字の描画(横)
+	public void drawLetterCrosswise(String left,String right,int i){
+		text( left + right, massW / 4 + massW * i, -5);
+	}
+
+	//表周りの文字の描画(縦)
+	public void drawLetterLengthwise(String left,String right,int i){
+		text( left + right, -24, massH / 4 * 3 + massH * i );
+	}
+
+	//表周りの文字の描画(横)
+	public void drawLetterCrosswise2(String left,String right,int i){
+		text( left + right, massW / 4 + massW * i, massH * 4 + 16);
+	}
+
+	//表周りの文字の描画(縦)
+	public void drawLetterLengthwise2(String left,String right,int i){
+		text( left + right, massW * 4 + 4, massH / 4 * 3 + massH * i );
+//		text( left + right, -24, massH / 4 * 3 + massH * i );
+	}
+
+	// マスの周りの文字
+	public void drawLetter(String a, String b, String c, String d) {
+		textSize(14);
+		fill(0, 0, 0);
+		text(c + d, -massW + massW / 3, -massH + massH / 3);
+		text(a + b, -massW, 0);
+	}
+
+	// マスの周りの文字
+	public void drawLetter2(String a, String b, String c, String d) {
+		textSize(14);
+		fill(0, 0, 0);
+		text(c + d, massW * 4, massH * 4 + massH / 3 * 2 );
+		text(a + b, massW * 4 + massW / 3, massH * 4 + massH / 4 );
+//		text(c + d, -massW + massW / 3, massH * 4 + massH / 3 * 2 );
+//		text(a + b, -massW - 5, massH * 4 + massH / 4 );
+	}
+
+	// マスの周りの要素
+	public void drawLine(int strokeSize) {
+		stroke(0, 0, 0);
+		strokeWeight(strokeSize);
+		line(0, 0, -massW, -massH);
+	}
+
+	// マスの周りの要素
+	public void drawLine2(int strokeSize) {
+		stroke(0, 0, 0);
+		strokeWeight(strokeSize);
+		line( massW * 4, massH * 4, massW * 5, massH * 4 + massH / 2);
+//		line( 0, massH * 4, -massW, massH * 4 + massH / 2);
+	}
+
 
 	//点線を描く
 	public void dotLine(int transX,int transY,int pointX,int pointY,int z){
-		stroke(0,0,255);
+		stroke(121,111,106);
 		strokeWeight(1);
 		int j = 0;
 		int i = 0;

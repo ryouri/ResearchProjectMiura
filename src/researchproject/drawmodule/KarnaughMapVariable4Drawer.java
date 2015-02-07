@@ -295,7 +295,6 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	// マスの周りの文字
 	public void drawLetter(String a, String b, String c, String d) {
 		textSize(14);
-
 		fill(0, 0, 0);
 		text(c + d, -massW + massW / 3, -massH + massH / 3);
 		text(a + b, -massW, 0);
