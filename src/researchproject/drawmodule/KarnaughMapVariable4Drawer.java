@@ -193,7 +193,7 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 	public void draw() {
 
 		// 座標軸の移動
-		translate(width / 4, height / 4);
+		translate(width / 4 + 20, height / 4 + 20);
 
 		int i = 0;// 配列の行番号に対応
 		int j = 0;// 配列の列番号に対応
@@ -231,6 +231,18 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 			text(resultStringArray.get(nowProcessResultIndex), -50, 150);
 		}
 
+		//マス周りの文字(0 or 1)横
+		drawLetterCrosswise("0","0",0);
+		drawLetterCrosswise("0","1",1);
+		drawLetterCrosswise("1","1",2);
+		drawLetterCrosswise("1","0",3);
+
+		//マス周りの文字(0 or 1)縦
+		drawLetterLengthwise("0","0",0);
+		drawLetterLengthwise("0","1",1);
+		drawLetterLengthwise("1","1",2);
+		drawLetterLengthwise("1","0",3);
+
 		if(finishAnimationFlag){
 			kirakira();
 		}
@@ -253,6 +265,16 @@ public class KarnaughMapVariable4Drawer extends PApplet {
 		fill(0, 0, 0);
 		textSize(12);
 		text("1", massW / 3 + massW * j, massH / 3 * 2 + massH * i);
+	}
+
+	//表周りの文字の描画(横)
+	public void drawLetterCrosswise(String left,String right,int i){
+		text( left + right, massW / 4 + massW * i, -5);
+	}
+
+	//表周りの文字の描画(縦)
+	public void drawLetterLengthwise(String left,String right,int i){
+		text( left + right, -24, massH / 4 * 3 + massH * i );
 	}
 
 	// マスに色をつける

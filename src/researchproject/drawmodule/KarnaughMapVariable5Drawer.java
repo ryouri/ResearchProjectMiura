@@ -530,7 +530,7 @@ public class KarnaughMapVariable5Drawer extends PApplet{
 
 	//決定ループ描画
 	public void resultLoopDraw(int i, int j){
-		fill(235,121,136, 80);
+		fill(235,121,136, 90);
 		rect(massW * j, massH * i, massW, massH);
 	}
 
