@@ -116,12 +116,13 @@ public class LoopManager{
 	}
 
 	public void processCombinationLoop() {
-		ArrayList<ArrayList<Loop>> combinationLoopArray = new ArrayList<ArrayList<Loop>>();
-
+		//成立Loopが一つならそれを格納して終了
 		if (successLoopArray.size() == 1) {
 			beforeLogicalLoop2Array.add(successLoopArray);
 			return;
 		}
+
+		ArrayList<ArrayList<Loop>> combinationLoopArray = new ArrayList<ArrayList<Loop>>();
 
 		//Loopの組み合わせを生成
 		CombinationGenerator combinationGenerator = new CombinationGenerator(successLoopArray.size());
@@ -139,7 +140,6 @@ public class LoopManager{
 		int xMax = massArray[0][0].length;
 
 		ArrayList<ArrayList<Loop>> judgedEncircleLoopArray = new ArrayList<ArrayList<Loop>>();
-
 		//まずは囲めていないLoopを排除する
 		//組み合わせごとにLoopを処理する
 		for (ArrayList<Loop> combinationLoops : combinationLoopArray) {
@@ -171,7 +171,9 @@ public class LoopManager{
 			}
 		}
 
-		int minLoopNum = 999;
+		
+		ArrayList<ArrayList<Loop>> judgedMinLoopArray = new ArrayList<ArrayList<Loop>>();
+		int minLoopNum = 9999;
 		//Loopの数が少ないLoopを抜き出す
 		//最もLoopが少ない組み合わせの値を抜き出す
 		for (ArrayList<Loop> combinationLoops : judgedEncircleLoopArray) {
@@ -182,6 +184,30 @@ public class LoopManager{
 		//Loopが少ない組み合わせを結果として抜き出す
 		for (ArrayList<Loop> combinationLoops : judgedEncircleLoopArray) {
 			if (minLoopNum == combinationLoops.size()) {
+				judgedMinLoopArray.add(combinationLoops);
+			}
+		}
+		
+		
+		int maxLoopSize = -1;
+		//Loopの大きさが大きい組み合わせを抜き出す
+		//最もLoopが大きさ組み合わせの値を抜き出す
+		for (ArrayList<Loop> combinationLoops : judgedMinLoopArray) {
+			int loopSumSize = 0;
+			for (Loop loop : combinationLoops) {
+				loopSumSize += loop.getLoopUnitArray().size();
+			}
+			if (maxLoopSize < loopSumSize) {
+				maxLoopSize = loopSumSize;
+			}
+		}
+		//Loopが大きい組み合わせを結果として抜き出す
+		for (ArrayList<Loop> combinationLoops : judgedMinLoopArray) {
+			int loopSumSize = 0;
+			for (Loop loop : combinationLoops) {
+				loopSumSize += loop.getLoopUnitArray().size();
+			}
+			if (maxLoopSize == loopSumSize) {
 				beforeLogicalLoop2Array.add(combinationLoops);
 			}
 		}
@@ -260,8 +286,10 @@ public class LoopManager{
 
 			System.out.println(logicalEquation);
 
-			resultStringArray.add(logicalEquation);
-			resultLoop2Array.add(successLoops);
+			synchronized (resultLoop2Array) {
+				resultStringArray.add(logicalEquation);
+				resultLoop2Array.add(successLoops);
+			}
 		}
 	}
 

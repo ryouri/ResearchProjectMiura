@@ -53,7 +53,8 @@ public class DrawManager {
 
 			//JFrameに貼り付けることで，JAppletを表示する
 			JFrame frame = new JFrame("Test");
-			frame.setSize(500, 500); // サイズは適当。上で作ったインスタンスからゲットするのもいいと思います。
+			frame.setLocation(0, 40);
+			frame.setSize(780, 580); // サイズは適当。上で作ったインスタンスからゲットするのもいいと思います。
 			frame.add(karnaughMapDrawer);
 			frame.setVisible(true);
 		}
